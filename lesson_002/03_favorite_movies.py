@@ -19,5 +19,5 @@ first = my_favorite_movies[0:10]
 second = my_favorite_movies[42:57]
 third = my_favorite_movies[11:25]
 fourth = my_favorite_movies[-23:-17]
-print(first + '\n', second + '\n', third + '\n', fourth)  # TODO Попробуйте тут использовать параметр sep='\n'
+print(first, second, third, fourth, sep='\n' )
 
