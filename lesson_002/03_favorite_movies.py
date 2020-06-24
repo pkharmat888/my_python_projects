@@ -16,3 +16,8 @@ my_favorite_movies = 'Терминатор, Пятый элемент, Ават�
 # как указано в задании!
 
 # TODO здесь ваш код
+first = my_favorite_movies[0:10]
+second = my_favorite_movies[42:57]
+third = my_favorite_movies[11:25]
+fourth = my_favorite_movies[-23:-17]
+print(first + '\n',second + '\n',third + '\n',fourth )
