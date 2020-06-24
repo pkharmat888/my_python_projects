@@ -15,9 +15,9 @@ my_favorite_movies = 'Терминатор, Пятый элемент, Ават�
 # Использовать .split() или .find()или другие методы строки нельзя - пользуйтесь только срезами,
 # как указано в задании!
 
-# TODO здесь ваш код
 first = my_favorite_movies[0:10]
 second = my_favorite_movies[42:57]
 third = my_favorite_movies[11:25]
 fourth = my_favorite_movies[-23:-17]
-print(first + '\n',second + '\n',third + '\n',fourth )
+print(first + '\n', second + '\n', third + '\n', fourth)  # TODO Попробуйте тут использовать параметр sep='\n'
+
