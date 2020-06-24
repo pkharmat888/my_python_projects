@@ -63,7 +63,7 @@ table_cost2 = table_quantity2 * table_price2
 total_table_quantity = table_quantity + table_quantity2
 total_table_cost = table_cost + table_cost2
 
-print('Стол -', total_table_quantity , 'шт, стоимость', total_table_cost , 'руб')
+print('Стол -', total_table_quantity, 'шт, стоимость', total_table_cost, 'руб')
 
 sofa_code = goods['Диван']
 sofa_item = store[sofa_code][0]
@@ -79,7 +79,7 @@ sofa_cost2 = sofa_quantity2 * sofa_price2
 total_sofa_quatity = sofa_quantity + sofa_quantity2
 total_sofa_cost = sofa_cost + sofa_cost2
 
-print('Диван -', total_sofa_quatity, 'шт, стоимость', total_sofa_cost , 'руб')
+print('Диван -', total_sofa_quatity, 'шт, стоимость', total_sofa_cost, 'руб')
 
 chair_code = goods['Стул']
 chair_item = store[chair_code][0]
@@ -100,10 +100,11 @@ chair_cost3 = chair_quantity3 * chair_price3
 total_chair_quantity = chair_quantity + chair_quantity2 + chair_quantity3
 total_chair_cost = chair_cost + chair_cost2 + chair_cost3
 
-print('Стул -', total_chair_quantity , 'шт, стоимость', total_chair_cost , 'руб')
+print('Стул -', total_chair_quantity, 'шт, стоимость', total_chair_cost, 'руб')
 ##########################################################################################
 # ВНИМАНИЕ! После того как __ВСЯ__ домашняя работа сделана и запушена на сервер,         #
 # нужно зайти в ЛМС (LMS - Learning Management System ) по адресу http://go.skillbox.ru  #
 # и оформить попытку сдачи ДЗ! Без этого ДЗ не будет проверяться!                        #
 # Как оформить попытку сдачи смотрите видео - https://youtu.be/qVpN0L-C3LU               #
 ##########################################################################################
+#зачёт!

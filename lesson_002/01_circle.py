@@ -12,7 +12,7 @@ radius = 42
 
 
 pi = 3.1415926
-ploshad = (pi * radius) ** 2  # TODO В квадрат нужно возвести только радиус
+ploshad = pi * radius ** 2  #  В квадрат нужно возвести только радиус
 print(round(ploshad, 4))
 
 # Далее, пусть есть координаты точки
@@ -47,3 +47,4 @@ print(point_2_to_zero < radius)
 # 77777.7777
 # False
 # False
+#зачёт!
