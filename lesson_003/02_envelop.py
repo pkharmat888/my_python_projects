@@ -10,18 +10,25 @@
 # Результат проверки вывести на консоль (ДА/НЕТ)
 # Использовать только операторы if/elif/else, можно вложенные
 
-envelop_x, envelop_y = 10, 7
-paper_x, paper_y = 8, 9
-# проверить для
 # paper_x, paper_y = 9, 8
 # paper_x, paper_y = 6, 8
 # paper_x, paper_y = 8, 6
 # paper_x, paper_y = 3, 4
 # paper_x, paper_y = 11, 9
 # paper_x, paper_y = 9, 11
-# (просто раскоментировать нужную строку и проверить свой код)
 
-# TODO здесь ваш код
+paper_x, paper_y = map(int, input('Введите размеры бумаги в формате х и у через пробел: ').split())
+
+envelop_x, envelop_y = 10, 7
+
+if envelop_x >= paper_x and envelop_y >= paper_y:
+    print('Да, письмо помещается в конверте')
+elif envelop_x >= paper_y and envelop_y >= paper_x:
+    print('Да, письмо поместится в конверте, если его перевернуть')
+else:
+    print('Нет, письмо не поместится в конверте')
+
+
 
 # Усложненное задание, решать по желанию.
 # Заданы размеры hole_x, hole_y прямоугольного отверстия и размеры brick_х, brick_у, brick_z кирпича (все размеры
