@@ -56,6 +56,12 @@ store = {
 
 # TODO здесь ваш код
 
+for name in goods:
+    print(goods[name])
+
+
+
+
 
 
 

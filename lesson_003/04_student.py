@@ -24,3 +24,8 @@ while months < 10:
 
 print('Студенту надо попросить',int(expenses - educational_grant),'рублей')
 
+
+
+
+
+
