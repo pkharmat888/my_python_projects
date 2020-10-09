@@ -56,14 +56,87 @@ store = {
 
 # TODO здесь ваш код
 
-for name in goods:
-    print(goods[name])
+
+for name_of_good, number_of_good in goods.items():
+    
+    total_goods = 0
+    total_price = 0
+    
+    store_number = store[number_of_good]
+    
+    if number_of_good in store:
+        for things in store_number:
+            total_goods += things['quantity']
+            total_price += things['price']
+        print(name_of_good, '-', total_goods,'шт', 'стоимость', total_price, 'руб')
 
 
 
 
 
 
-
-
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
