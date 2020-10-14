@@ -47,3 +47,4 @@ for _ in range(100):
     smile_drawing(x, y)
 
 sd.pause()
+#зачёт!

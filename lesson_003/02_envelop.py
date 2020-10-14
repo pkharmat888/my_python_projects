@@ -40,7 +40,16 @@ hole_x, hole_y = 8, 9
 # brick_x, brick_y, brick_z = 3, 6, 11
 # brick_x, brick_y, brick_z = 3, 11, 6
 # (просто раскоментировать нужную строку и проверить свой код)
-
+# TODO Для того, чтобы кирпич прошёл в отверстие - достаточно проверить 2 стороны, чтобы они были меньше отверстия
+# TODO Тут всего может быть 6 различных вариантов (3 площади у кирпича это первые три варианта,
+# TODO и если их перевернуть будет ещё 3)
+# TODO Дам вам вот такую подсказочку:
+# TODO h_x - b_x  h_y - b_y
+# TODO h_x - b_y  h_y - b_x
+# TODO h_x - b_x  h_y - b_z
+# TODO h_x - b_z  h_y - b_x
+# TODO h_x - b_y  h_y - b_z
+# TODO h_x - b_z  h_y - b_y
 if hole_x >= brick_x and hole_y >= brick_y:
     if hole_x >= brick_x and hole_y >= brick_z:
         if hole_x >= brick_z and hole_y >= brick_y:

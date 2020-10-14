@@ -39,3 +39,4 @@ point = sd.get_point(600, -200)
 bubble(point, 5)
 
 sd.pause()
+#зачёт!

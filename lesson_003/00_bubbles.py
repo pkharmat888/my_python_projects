@@ -42,3 +42,4 @@ for _ in range(100):
     bubble(point, step)
 
 sd.pause()
+#зачёт!

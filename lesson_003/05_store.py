@@ -37,5 +37,5 @@ for name_of_good, number_of_good in goods.items():
     if number_of_good in store:
         for things in store_number:
             total_goods += things['quantity']
-            total_price += things['price']
+            total_price += things['price']  # TODO суммировать нужно не цену, а стоимость (цена*количество)
         print(name_of_good, '-', total_goods, 'шт, стоимость', total_price, 'руб')
