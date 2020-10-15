@@ -17,14 +17,8 @@ months = {
     11: 30,
     12: 31
 }
-# TODO У вас два решения совмещены
-# TODO попробуйте просто проверить, есть ли month среди ключей словаря
-# TODO и если да - вывести print(months[month], 'Дней')
-if month in [1, 3, 5, 7, 8, 10, 12]:
-    print(months[month], 'Дней')
-elif month in [4, 6, 9, 11]:
-    print(months[month], 'Дней')
-elif month == 2:
+
+if month in months:
     print(months[month], 'Дней')
 else:
     print('Вы ввели неверный номер месяца')

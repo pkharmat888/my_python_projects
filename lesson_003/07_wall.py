@@ -6,50 +6,11 @@ sd.resolution = (1600, 900)
 
 color = sd.COLOR_DARK_ORANGE
 
-
-def create_brick(point1, point2, color):
-    # TODO отдельную функцию для вызова одной другой функции делать не стоит
-    sd.rectangle(left_bottom=point1, right_top=point2, color=color, width=2)
-
-
-y1 = -50
-y2 = 0
-# TODO Решение рабочее, но усложненное
-# TODO Для зачёта и для практики дополнительной - давайте попробуем упростить этот код
-# TODO Не теряя функционал.
-
-# TODO Первым делом стоит задать изменение координат при помощи циклов и range с нужным шагом
-# TODO Что-то похожее вы делали в 00 задании с пузырьяками в несколько рядов
-
-# TODO Тк сдвиг зависит от номеря ряда, а ряд от внешнего цикла
-# TODO Будем нумеровать итерации в нём -
-# TODO for row, y in enumerate(range(...))
-# TODO Так, в row у нас будет номер ряда.
-# TODO Проверив его на чётность, мы сможем решить, двигать ли ряд, или нет
-# TODO (row % 2 == 0)
-# TODO Как добавить сдвиг, узнав о чётности ряда?
-# TODO Например, если ряд четный, начинать цикл с -50, если нет - то с 0
-# TODO Для этого до цикла создадим x0 и с помощью тернарного оператора будем менять его значения
-# TODO x0 = -50 if (условие четности ряда) else 0
-# TODO И этот x0 добавим в цикл фор
-
-# TODO Тут я бы ещё посоветовал связать размеры кирпича с переменными
-# TODO Т.е. создать 2 переменные с размерами 100 и 50
-# TODO и использовать их в range и в точках
-for y in range(0, 18, 1):
-    if y % 2 == 0:
-        x1 = -50
-        x2 = 50
-    if y % 2 != 0:
-        x1 = 0
-        x2 = 100
-    y1 += 50
-    y2 += 50
-    for x in range(0, 18, 1):
-        point1 = sd.get_point(x1, y1)
-        point2 = sd.get_point(x2, y2)
-        x1 += 100
-        x2 += 100
-        create_brick(point1, point2, color)
+for row, y in enumerate(range(50, 950, 50)):
+    x = -50 if row % 2 else 0
+    for x in range(x, 1700, 100):
+        point1 = sd.get_point(x - 100, y - 50)
+        point2 = sd.get_point(x, y)
+        sd.rectangle(left_bottom=point1, right_top=point2, color=color, width=2)
 
 sd.pause()
