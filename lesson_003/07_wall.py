@@ -14,3 +14,4 @@ for row, y in enumerate(range(50, 950, 50)):
         sd.rectangle(left_bottom=point1, right_top=point2, color=color, width=2)
 
 sd.pause()
+#зачёт!

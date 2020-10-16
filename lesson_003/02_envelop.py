@@ -56,3 +56,4 @@ elif hole_x >= brick_z and hole_y >= brick_y:
     print('Войдет')
 else:
     print('Не войдет')
+#зачёт!
