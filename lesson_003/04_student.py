@@ -11,3 +11,4 @@ while months <= 10:
     months += 1
 
 print('Студенту надо попросить', int(total_expenses - total_grant), 'рублей')
+#зачёт!
