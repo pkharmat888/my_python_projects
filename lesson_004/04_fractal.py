@@ -2,38 +2,89 @@
 
 import simple_draw as sd
 
-# 1) Написать функцию draw_branches, которая должна рисовать две ветви дерева из начальной точки
-# Функция должна принимать параметры:
-# - точка начала рисования,
-# - угол рисования,
-# - длина ветвей,
-# Отклонение ветвей от угла рисования принять 30 градусов,
+sd.resolution = (1200, 1000)
+
+
+# 1) Написать функцию draw_branches
+
+# root_point = sd.get_point(300, 30)
+#
+# v = sd.get_vector(start_point=root_point, angle=90, length=100)
+# v.draw()
+#
+# start_point = v.end_point
+#
+#
+# def draw_branches(point, angle, length):
+#     delta = 30
+#     branch1 = sd.get_vector(start_point=point, angle=angle - delta, length=length)
+#     branch2 = sd.get_vector(start_point=point, angle=angle + delta, length=length)
+#     branch1.draw()
+#     branch2.draw()
+#
+#
+# draw_branches(point=start_point, angle=90, length=100)
+# sd.pause()
 
 # 2) Сделать draw_branches рекурсивной
-# - добавить проверку на длину ветвей, если длина меньше 10 - не рисовать
-# - вызывать саму себя 2 раза из точек-концов нарисованных ветвей,
-#   с параметром "угол рисования" равным углу только что нарисованной ветви,
-#   и параметром "длина ветвей" в 0.75 меньшей чем длина только что нарисованной ветви
 
-# 3) Запустить вашу рекурсивную функцию, используя следующие параметры:
-# root_point = sd.get_point(300, 30)
-# draw_branches(start_point=root_point, angle=90, length=100)
+# 3) Запустить вашу рекурсивную функцию
 
-# Пригодятся функции
-# sd.get_point()
-# sd.get_vector()
-# Возможный результат решения см lesson_004/results/exercise_04_fractal_01.jpg
-
-# можно поиграть -шрифтами- цветами и углами отклонения
-
-# TODO здесь ваш код
+# def draw_branches(point, angle, length):
+#     delta = 30
+#     if length < 2:
+#         return
+#     next_angle1 = angle + delta
+#     next_angle2 = angle - delta
+#     branch1 = sd.get_vector(start_point=point, angle=next_angle1, length=length)
+#     branch2 = sd.get_vector(start_point=point, angle=next_angle2, length=length)
+#     next_length = length * .75
+#     branch1.draw()
+#     branch2.draw()
+#     draw_branches(point=branch1.end_point, angle=next_angle1, length=next_length)
+#     draw_branches(point=branch2.end_point, angle=next_angle2, length=next_length)
+#
+#
+# root_point = sd.get_point(600, 30)
+#
+# v = sd.get_vector(start_point=root_point, angle=90, length=100)
+# v.draw()
+#
+# start_point = v.end_point
+#
+# draw_branches(point=start_point, angle=90, length=100)
+#
+# sd.pause()
 
 # 4) Усложненное задание (делать по желанию)
-# - сделать рандомное отклонение угла ветвей в пределах 40% от 30-ти градусов
-# - сделать рандомное отклонение длины ветвей в пределах 20% от коэффициента 0.75
-# Возможный результат решения см lesson_004/results/exercise_04_fractal_02.jpg
 
-# Пригодятся функции
-# sd.random_number()
+def draw_branches(point, angle, length):
+    delta_angle1 = sd.random_number(18, 42)
+    delta_angle2 = sd.random_number(18, 42)
+    delta_length1 = (sd.random_number(60, 90)) * 0.01
+    delta_length2 = (sd.random_number(60, 90)) * 0.01
+    if length < 2:
+        return
+    next_angle1 = angle + delta_angle1
+    next_angle2 = angle - delta_angle2
+    branch1 = sd.get_vector(start_point=point, angle=next_angle1, length=length)
+    branch2 = sd.get_vector(start_point=point, angle=next_angle2, length=length)
+    next_length1 = length * delta_length1
+    next_length2 = length * delta_length2
+    branch1.draw()
+    branch2.draw()
+    draw_branches(point=branch1.end_point, angle=next_angle1, length=next_length1)
+    draw_branches(point=branch2.end_point, angle=next_angle2, length=next_length2)
+
+
+root_point = sd.get_point(600, 30)
+
+v = sd.get_vector(start_point=root_point, angle=90, length=100)
+v.draw()
+
+start_point = v.end_point
+
+draw_branches(point=start_point, angle=90, length=100)
+
 
 sd.pause()

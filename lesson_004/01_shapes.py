@@ -2,6 +2,10 @@
 
 import simple_draw as sd
 
+sd.resolution = (1200, 1000)
+
+
+
 # Часть 1.
 # Написать функции рисования равносторонних геометрических фигур:
 # - треугольника
@@ -36,7 +40,62 @@ import simple_draw as sd
 # sd.line()
 # Результат решения см lesson_004/results/exercise_01_shapes.jpg
 
-# TODO здесь ваш код
+point_triangle = sd.get_point(250, 100)
+point_square = sd.get_point(750, 100)
+point_pentagon = sd.get_point(250, 550)
+point_hexagon = sd.get_point(750, 550)
+
+
+# Triangle
+
+def triangle(point, angle=0, length=200):
+    start_point = point
+    for tilt_angle in range(0, 360, 120):
+        v = sd.get_vector(start_point=start_point, angle=angle + tilt_angle, length=length)
+        v.draw()
+        start_point = v.end_point
+
+
+triangle(point=point_triangle, angle=30, length=200)
+
+
+# Square
+
+def square(point, angle=0, length=200):
+    start_point = point
+    for tilt_angle in range(0, 360, 90):
+        v = sd.get_vector(start_point=start_point, angle=angle + tilt_angle, length=length)
+        v.draw()
+        start_point = v.end_point
+
+
+square(point=point_square, angle=30, length=200)
+
+
+# Pentagon
+
+def pentagon(point, angle=0, length=175):
+    start_point = point
+    for tilt_angle in range(0, 360, 72):
+        v = sd.get_vector(start_point=start_point, angle=angle + tilt_angle, length=length)
+        v.draw()
+        start_point = v.end_point
+
+
+pentagon(point=point_pentagon, angle=30, length=175)
+
+
+# Hexagon
+
+def hexagon(point, angle=0, length=150):
+    start_point = point
+    for tilt_angle in range(0, 360, 60):
+        v = sd.get_vector(start_point=start_point, angle=angle + tilt_angle, length=length)
+        v.draw()
+        start_point = v.end_point
+
+
+hexagon(point=point_hexagon, angle=45, length=150)
 
 # Часть 1-бис.
 # Попробуйте прикинуть обьем работы, если нужно будет внести изменения в этот код.
