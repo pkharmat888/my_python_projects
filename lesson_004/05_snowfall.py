@@ -31,8 +31,10 @@ for number in range(N):
 while True:
     sd.clear_screen()
     for index, x in enumerate(x_coordinates):
-        y = y_coordinates.pop(index)
-        next_y = y - 10
+        y = y_coordinates.pop(index)  # TODO вместо удаления и добавления взамен
+        next_y = y - 10  # TODO лучше просто обращаться к этому значению и менять его внутри списка
+        # TODO это будет вычислительно эффективнее
+        # TODO y_coordinates[index] -= 10 например
         y_coordinates.insert(index, next_y)
         point = sd.get_point(x, y)
         sd.snowflake(center=point, length=random_length[index])
@@ -41,7 +43,7 @@ while True:
         break
 sd.pause()
 
-
+# TODO можно приступать ко второй части
 # Примерный алгоритм отрисовки снежинок
 #   навсегда
 #     очистка экрана
