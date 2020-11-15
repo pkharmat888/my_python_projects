@@ -5,7 +5,6 @@ import simple_draw as sd
 sd.resolution = (1200, 1000)
 
 
-
 # Часть 1.
 # Написать функции рисования равносторонних геометрических фигур:
 # - треугольника
@@ -40,91 +39,90 @@ sd.resolution = (1200, 1000)
 # sd.line()
 # Результат решения см lesson_004/results/exercise_01_shapes.jpg
 
+
+# Если приблизить итоговую фигуру, нарисованную векторами, будет заметен разрыв между последней стороной
+# и начальной точкой.
+# Этот разрыв надо убрать.
+# Происходит это потому, что вектор рисуется из одной точки, а координаты второй рассчитываются
+# Расчёты округляются до целых чисел (тк нельзя нарисовать пол пикселя)
+# Из-за этого появляются неточности, которые копятся с каждой стороной и в итоге происходит разрыв.
+# В нашем случае решить это можно с помощью sd.line() вместо последнего вектора.
+
+
+# #  ПРИМЕР:
+# #  Первый вариант с расчётом всех 3 углов для треугольника
+# start_angle = 20
+# step = 120
+# print('start 1')
+# for cur_angle in range(0, 360, step):  #  Тут будет 3 итерации
+#     print(cur_angle, start_angle, cur_angle + start_angle)
+# print('end 1')
+# print('start 2')
+# for cur_angle in range(0, 360 - step, step):  #  Тут 1 итерация убирается (за счёт уменьшения 360 на один шаг)
+#     print(cur_angle, start_angle, cur_angle + start_angle)
+# print('end 2')
+
+
+#  Таким образом мы можем 1) Рассчитывать углы при помощи цикла
+#  2) Управлять количеством итераций цикла. Это нужно чтобы последнюю сторону нарисовать линией.
+
+#  Попробуйте использовать эти приёмы и реализовать
+#  1) Расчёт угла в цикле
+#  2) Передачу начального угла (который задан параметром) и угла из цикла в вектор
+#  3) Нарисовать последнюю линию при помощи sd.line
+#  (или хотя бы для начала не рисовать последнюю сторону вообще)
+
+
+def triangle(point, angle=0, length=200):
+    start_point = point
+    step = 120
+    for tilt_angle in range(0, 360 - step, step):
+        v = sd.get_vector(start_point=start_point, angle=angle + tilt_angle, length=length)
+        v.draw()
+        start_point = v.end_point
+    sd.line(start_point=v.end_point, end_point=point)
+
+
+def square(point, angle=0, length=200):
+    start_point = point
+    step = 90
+    for tilt_angle in range(0, 360 - step, step):
+        v = sd.get_vector(start_point=start_point, angle=angle + tilt_angle, length=length)
+        v.draw()
+        start_point = v.end_point
+    sd.line(start_point=v.end_point, end_point=point)
+
+
+def pentagon(point, angle=0, length=175):
+    start_point = point
+    step = 72
+    for tilt_angle in range(0, 360 - step, step):
+        v = sd.get_vector(start_point=start_point, angle=angle + tilt_angle, length=length)
+        v.draw()
+        start_point = v.end_point
+    sd.line(start_point=v.end_point, end_point=point)
+
+
+def hexagon(point, angle=0, length=150):
+    start_point = point
+    step = 60
+    for tilt_angle in range(0, 360 - step, step):
+        v = sd.get_vector(start_point=start_point, angle=angle + tilt_angle, length=length)
+        v.draw()
+        start_point = v.end_point
+    sd.line(start_point=v.end_point, end_point=point)
+
+
 point_triangle = sd.get_point(250, 100)
 point_square = sd.get_point(750, 100)
 point_pentagon = sd.get_point(250, 550)
 point_hexagon = sd.get_point(750, 550)
 
-# TODO Код в файле нужно разделить на части
-# TODO Сперва идут импорты
-# TODO Затем идут def-ы (создание функций)
-# TODO А уже затем исполняемый код, который создает точки и вызывает функции
-
-# Triangle
-
-def triangle(point, angle=0, length=200):
-    start_point = point
-    for tilt_angle in range(0, 360, 120):
-        v = sd.get_vector(start_point=start_point, angle=angle + tilt_angle, length=length)
-        v.draw()
-        start_point = v.end_point
-
-    # TODO Если приблизить итоговую фигуру, нарисованную векторами, будет заметен разрыв между последней стороной
-    # TODO и начальной точкой.
-    # TODO Этот разрыв надо убрать.
-    # TODO Происходит это потому, что вектор рисуется из одной точки, а координаты второй рассчитываются
-    # TODO Расчёты округляются до целых чисел (тк нельзя нарисовать пол пикселя)
-    # TODO Из-за этого появляются неточности, которые копятся с каждой стороной и в итоге происходит разрыв.
-    # TODO В нашем случае решить это можно с помощью sd.line() вместо последнего вектора.
-
-# TODO ПРИМЕР:
-# TODO Первый вариант с расчётом всех 3 углов для треугольника
-start_angle = 20
-step = 120
-print('start 1')
-for cur_angle in range(0, 360, step):  # TODO Тут будет 3 итерации
-    print(cur_angle, start_angle, cur_angle + start_angle)
-print('end 1')
-print('start 2')
-for cur_angle in range(0, 360 - step, step):  # TODO Тут 1 итерация убирается (за счёт уменьшения 360 на один шаг)
-    print(cur_angle, start_angle, cur_angle + start_angle)
-print('end 2')
-# TODO Таким образом мы можем 1) Рассчитывать углы при помощи цикла
-# TODO 2) Управлять количеством итераций цикла. Это нужно чтобы последнюю сторону нарисовать линией.
-
-# TODO Попробуйте использовать эти приёмы и реализовать
-# TODO 1) Расчёт угла в цикле
-# TODO 2) Передачу начального угла (который задан параметром) и угла из цикла в вектор
-# TODO 3) Нарисовать последнюю линию при помощи sd.line
-# TODO (или хотя бы для начала не рисовать последнюю сторону вообще)
 triangle(point=point_triangle, angle=30, length=200)
-
-
-# Square
-
-def square(point, angle=0, length=200):
-    start_point = point
-    for tilt_angle in range(0, 360, 90):
-        v = sd.get_vector(start_point=start_point, angle=angle + tilt_angle, length=length)
-        v.draw()
-        start_point = v.end_point
-
 
 square(point=point_square, angle=30, length=200)
 
-
-# Pentagon
-
-def pentagon(point, angle=0, length=175):
-    start_point = point
-    for tilt_angle in range(0, 360, 72):
-        v = sd.get_vector(start_point=start_point, angle=angle + tilt_angle, length=length)
-        v.draw()
-        start_point = v.end_point
-
-
 pentagon(point=point_pentagon, angle=30, length=175)
-
-
-# Hexagon
-
-def hexagon(point, angle=0, length=150):
-    start_point = point
-    for tilt_angle in range(0, 360, 60):
-        v = sd.get_vector(start_point=start_point, angle=angle + tilt_angle, length=length)
-        v.draw()
-        start_point = v.end_point
-
 
 hexagon(point=point_hexagon, angle=45, length=150)
 

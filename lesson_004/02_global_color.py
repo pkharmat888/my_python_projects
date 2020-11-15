@@ -20,76 +20,79 @@ sd.resolution = (1200, 1000)
 
 def triangle(point, figure_color, angle=0, length=200):
     start_point = point
-    for tilt_angle in range(0, 360, 120):
-        v = sd.get_vector(start_point=start_point, angle=angle + tilt_angle, length=length, width=2)
+    step = 120
+    for tilt_angle in range(0, 360 - step, step):
+        v = sd.get_vector(start_point=start_point, angle=angle + tilt_angle, length=length)
         v.draw(color=figure_color)
         start_point = v.end_point
+    sd.line(start_point=v.end_point, end_point=point, color=figure_color)
 
 
 def square(point, figure_color, angle=0, length=200):
     start_point = point
-    for tilt_angle in range(0, 360, 90):
+    step = 90
+    for tilt_angle in range(0, 360 - step, step):
         v = sd.get_vector(start_point=start_point, angle=angle + tilt_angle, length=length)
         v.draw(color=figure_color)
         start_point = v.end_point
+    sd.line(start_point=v.end_point, end_point=point, color=figure_color)
 
 
 def pentagon(point, figure_color, angle=0, length=175):
     start_point = point
-    for tilt_angle in range(0, 360, 72):
+    step = 72
+    for tilt_angle in range(0, 360 - step, step):
         v = sd.get_vector(start_point=start_point, angle=angle + tilt_angle, length=length)
         v.draw(color=figure_color)
         start_point = v.end_point
+    sd.line(start_point=v.end_point, end_point=point, color=figure_color)
 
 
 def hexagon(point, figure_color, angle=0, length=150):
     start_point = point
-    for tilt_angle in range(0, 360, 60):
+    step = 60
+    for tilt_angle in range(0, 360 - step, step):
         v = sd.get_vector(start_point=start_point, angle=angle + tilt_angle, length=length)
         v.draw(color=figure_color)
         start_point = v.end_point
+    sd.line(start_point=v.end_point, end_point=point, color=figure_color)
 
 
 point_triangle = sd.get_point(250, 100)
 point_square = sd.get_point(750, 100)
 point_pentagon = sd.get_point(250, 550)
 point_hexagon = sd.get_point(750, 550)
-# TODO Названия цветов и значения цветов - 2 связанных элемента, которые необходимы нам для
-# TODO работы этого алгоритма.
-# TODO Поэтому в этом случае удобнее создать словарь следующей структуры
-# TODO словарь = {'0': {'color_name': 'red', 'sd_name': sd.COLOR_RED},...}
-# TODO Таким образом для каждого цвета у нас будет свой словарь. И у каждого словаря будут одинаковые ключи
-# TODO 'color_name' и 'sd_name'
-# TODO Тогда можно будет легко проверить ввод (user_input in словарь)
-# TODO А если среди ключей есть выбор пользователя - по этому ключу мы получим нужный вложенный словарь
-# TODO А там все ключи одинаковые, можем получить как название цвета, так и sd_цвет
+#  Названия цветов и значения цветов - 2 связанных элемента, которые необходимы нам для
+#  работы этого алгоритма.
+#  Поэтому в этом случае удобнее создать словарь следующей структуры
+#  словарь = {'0': {'color_name': 'red', 'sd_name': sd.COLOR_RED},...}
+#  Таким образом для каждого цвета у нас будет свой словарь. И у каждого словаря будут одинаковые ключи
+#  'color_name' и 'sd_name'
+#  Тогда можно будет легко проверить ввод (user_input in словарь)
+#  А если среди ключей есть выбор пользователя - по этому ключу мы получим нужный вложенный словарь
+#  А там все ключи одинаковые, можем получить как название цвета, так и sd_цвет
 colors = {
-    0: sd.COLOR_RED,
-    1: sd.COLOR_ORANGE,
-    2: sd.COLOR_YELLOW,
-    3: sd.COLOR_GREEN,
-    4: sd.COLOR_CYAN,
-    5: sd.COLOR_BLUE,
-    6: sd.COLOR_PURPLE
+    '0': {'color_name': 'red', 'sd_name': sd.COLOR_RED},
+    '1': {'color_name': 'orange', 'sd_name': sd.COLOR_ORANGE},
+    '2': {'color_name': 'yellow', 'sd_name': sd.COLOR_YELLOW},
+    '3': {'color_name': 'green', 'sd_name': sd.COLOR_GREEN},
+    '4': {'color_name': 'cyan', 'sd_name': sd.COLOR_CYAN},
+    '5': {'color_name': 'blue', 'sd_name': sd.COLOR_BLUE},
+    '6': {'color_name': 'purple', 'sd_name': sd.COLOR_PURPLE}
 }
 
-print("""Возможные цвета:
-            0 : red
-            1 : orange
-            2 : yellow
-            3 : green
-            4 : cyan
-            5 : blue
-            6 : purple""")
+print('Возможные цвета: ')
+for t, i in colors.items():
+    print(t, ':', i['color_name'])
 
-user_input = int(input('Введите желаемый цвет: '))
+user_input = input('Введите желаемый цвет: ')
 
 while user_input not in colors:
     print('Вы ввели некорректный номер !')
-    user_input = int(input('Введите желаемый цвет: '))
+    user_input = input('Введите желаемый цвет: ')
 else:
     number_of_color = int(user_input)
-    color = colors[user_input]
+    color = colors[user_input]['sd_name']
 
     triangle(point=point_triangle, figure_color=color, angle=30, length=200)
 
