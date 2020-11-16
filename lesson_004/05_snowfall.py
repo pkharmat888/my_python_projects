@@ -101,14 +101,12 @@ N = 20
 #   и добавлять новую снежинку
 # Результат решения см https://youtu.be/XBx0JtxHiLg
 
-# Создаю пустые списки для координат и размеров снежинки
 
+# Создаю пустые списки для координат, размеров снежинки и "старых" индексов
 x_coordinates = []
 y_coordinates = []
 random_length = []
-
-# Шаг падения "у"
-step = 10
+old_index_list = []
 
 # Генерирование координат и размеров снежинок и добавление их в списки
 for number in range(N):
@@ -118,42 +116,39 @@ for number in range(N):
 
 while True:
     sd.start_drawing()
-    # TODO Есть лишние действия, которые стоит упростить
     for index, x in enumerate(x_coordinates):
-        random = sd.random_number(-30, 30)  # Создаю переменную 'random' и присваиваю ей значение отклонения снежинки
-        x += random  # Добавляю рандом к каждому иксу
-        # TODO попробуйте не обращаться к x,y, это сейчас создает только больше лишних действий
-        # TODO при том, что изменение x,y не влияют на список координат
-        # TODO работайте сразу с y_coordinates[index] и x_coordinates[index]
-        # TODO при этом старайтесь соблюдать правило - изменение координат вносите только после закрашивания снежинки
-        # TODO закрасили - сдвинули - нарисовали
-        y = y_coordinates[index]  # Присваиваю переменной игрек значения из списка игреков и индексирую по энумерейту
-        point = sd.get_point(x - random, y + step)
-        if y > 50:  # TODO это сравнение не нужно, по крайней мере в таком виде
-            # TODO ведь если снежинка упала - то остальные действия тоже не нужно выполнять, так ведь?
-            # TODO выхода два:
-            # TODO либо написать это сравнение в начал цикла и вызывать continue, если снежинка "упала"
-            # TODO либо после рисования снежинки цветом выполнять эту проверку и начинать удаление снежинки
-            # TODO для этого нужно запомнить индекс в отдельный список. После завершения текущего цикла -
-            # TODO перевернуть список индексов (чтобы шли от большего к меньшему).
-            # TODO Запустить новый цикл (на одном уровне отступа с этим, т.е. внутри while, но не внутри for)
-            # TODO по списку индексов - и в нём уже удалять элементы из 3 списков по указанным индексам через .pop(index)
-            sd.snowflake(center=point, length=random_length[index], color=sd.background_color)
-        y_coordinates[index] -= step
-        x_coordinates[index] += random  # Меняю значения в списках
-        new_point = sd.get_point(x, y)
-        if y > 50:
-            sd.snowflake(center=new_point, length=random_length[index], color=sd.COLOR_WHITE)
-        if y in range(500, 503):  # Добавляю новые снежинки
-            for i in range(sd.random_number(1, 8)):
-                # TODO добавлять новые снежинки в цикле - не очень хорошо
-                # TODO (слишком много действий и снежинок будет получаться)
-                x_coordinates.append(sd.random_number(0, 1200))
-                y_coordinates.append(sd.random_number(1000, 1100))
-                random_length.append(sd.random_number(10, 100))
-    # TODO лучше вот тут делать проверку - сколько сейчас есть снежинок
-    # TODO и добавлять новые, чтобы их стало столько, сколько нужно
-    # TODO (при условии, что вы будете удалять упавшие снежинки)
+        # Назначаю рандомное значение падения и отклонения на каждом шагу
+        random_step_x = sd.random_number(-30, 30)
+        random_step_y = sd.random_number(5, 15)
+        # Создаю точку и рисую снежинку цветом фона
+        point = sd.get_point(x_coordinates[index], y_coordinates[index])
+        sd.snowflake(center=point, length=random_length[index], color=sd.background_color)
+        # Изменяю координаты
+        x_coordinates[index] += random_step_x
+        y_coordinates[index] -= random_step_y
+        # Создаю точку и рисую снежинку белым цветом
+        point = sd.get_point(x_coordinates[index], y_coordinates[index])
+        sd.snowflake(center=point, length=random_length[index], color=sd.COLOR_WHITE)
+        # Добавляю индекс снежинки, которая по игреку меньше пятидесяти в список "старых" индексов
+        if y_coordinates[index] < 50:
+            old_index_list.append(index)
+            # Сортирую список со "старыми" индексами
+            sorted(old_index_list, reverse=True)
+    # Если в списке "старых" индексов, находится хотя бы одно значение, то захожу в цикл и
+    # удаляю старые и сразу же добавляю новые значения, в списки координат и размеров снежинки,
+    # по индексу из списка "старых" индексов,
+    if any(old_index_list):
+        for old_index in old_index_list:
+            x_coordinates.pop(old_index)
+            x_coordinates.insert(old_index, sd.random_number(0, 1200))
+            y_coordinates.pop(old_index)
+            y_coordinates.insert(old_index, sd.random_number(1000, 1100))
+            random_length.pop(old_index)
+            random_length.insert(old_index, sd.random_number(10, 100))
+        # Очищаю список "старых" индексов
+        if any(old_index_list):
+            old_index_list.clear()
+
     sd.finish_drawing()
     sd.sleep(0.1)
     if sd.user_want_exit():

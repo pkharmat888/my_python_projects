@@ -65,17 +65,14 @@ colors = {
 }
 
 print('Возможные цвета: ')
-for t, i in colors.items():
-    print(t, ':', i['color_name'])
+for color_name, color in colors.items():
+    print(color_name, ':', color['color_name'])
 
 input_color = input('Введите желаемый цвет: ')
 
 while input_color not in colors:
     print('Вы ввели некорректный номер !')
     input_color = input('Введите желаемый цвет: ')
-else:
-    number_of_color = input_color
-    color = colors[input_color]
 
 figures = {
     '0': {'figure_name': 'Треугольник', 'fg_name': triangle},
@@ -85,8 +82,8 @@ figures = {
 }
 
 print('Возможные фигуры: ')
-for q, w in figures.items():  # TODO q,w - та же история с нэймингом
-    print(q, ':', w['figure_name'])
+for figure_name, figure in figures.items():
+    print(figure_name, ':', figure['figure_name'])
 
 input_figure = input('Введите желаемую фигуру: ')
 
@@ -94,8 +91,6 @@ while input_figure not in figures:
     print('Вы ввели некорректный номер !')
     input_figure = input('Введите желаемую фигуру: ')
 else:
-    number_of_figure = input_figure  # TODO еть ли смысл создавать ради этого действия новую переменную?
     color = colors[input_color]['sd_name']
-    figures[number_of_figure]['fg_name'](point=central_point, figure_color=color, angle=30, length=200)
-    # TODO можно ведь тут использовать input figure просто
+    figures[input_figure]['fg_name'](point=central_point, figure_color=color, angle=30, length=200)
 sd.pause()

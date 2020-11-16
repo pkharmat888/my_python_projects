@@ -73,59 +73,59 @@ sd.resolution = (1200, 1000)
 #  (или хотя бы для начала не рисовать последнюю сторону вообще)
 
 
-def triangle(point, angle=0, length=200):
-    start_point = point
-    step = 120
-    for tilt_angle in range(0, 360 - step, step):
-        v = sd.get_vector(start_point=start_point, angle=angle + tilt_angle, length=length)
-        v.draw()
-        start_point = v.end_point
-    sd.line(start_point=v.end_point, end_point=point)
+# def triangle(point, angle=0, length=200):
+#     start_point = point
+#     step = 120
+#     for tilt_angle in range(0, 360 - step, step):
+#         v = sd.get_vector(start_point=start_point, angle=angle + tilt_angle, length=length)
+#         v.draw()
+#         start_point = v.end_point
+#     sd.line(start_point=v.end_point, end_point=point)
+#
+#
+# def square(point, angle=0, length=200):
+#     start_point = point
+#     step = 90
+#     for tilt_angle in range(0, 360 - step, step):
+#         v = sd.get_vector(start_point=start_point, angle=angle + tilt_angle, length=length)
+#         v.draw()
+#         start_point = v.end_point
+#     sd.line(start_point=v.end_point, end_point=point)
+#
+#
+# def pentagon(point, angle=0, length=175):
+#     start_point = point
+#     step = 72
+#     for tilt_angle in range(0, 360 - step, step):
+#         v = sd.get_vector(start_point=start_point, angle=angle + tilt_angle, length=length)
+#         v.draw()
+#         start_point = v.end_point
+#     sd.line(start_point=v.end_point, end_point=point)
+#
+#
+# def hexagon(point, angle=0, length=150):
+#     start_point = point
+#     step = 60
+#     for tilt_angle in range(0, 360 - step, step):
+#         v = sd.get_vector(start_point=start_point, angle=angle + tilt_angle, length=length)
+#         v.draw()
+#         start_point = v.end_point
+#     sd.line(start_point=v.end_point, end_point=point)
+#
+#
+# point_triangle = sd.get_point(250, 100)
+# point_square = sd.get_point(750, 100)
+# point_pentagon = sd.get_point(250, 550)
+# point_hexagon = sd.get_point(750, 550)
+#
+# triangle(point=point_triangle, angle=30, length=200)
+#
+# square(point=point_square, angle=30, length=200)
+#
+# pentagon(point=point_pentagon, angle=30, length=175)
+#
+# hexagon(point=point_hexagon, angle=45, length=150)
 
-
-def square(point, angle=0, length=200):
-    start_point = point
-    step = 90
-    for tilt_angle in range(0, 360 - step, step):
-        v = sd.get_vector(start_point=start_point, angle=angle + tilt_angle, length=length)
-        v.draw()
-        start_point = v.end_point
-    sd.line(start_point=v.end_point, end_point=point)
-
-
-def pentagon(point, angle=0, length=175):
-    start_point = point
-    step = 72
-    for tilt_angle in range(0, 360 - step, step):
-        v = sd.get_vector(start_point=start_point, angle=angle + tilt_angle, length=length)
-        v.draw()
-        start_point = v.end_point
-    sd.line(start_point=v.end_point, end_point=point)
-
-
-def hexagon(point, angle=0, length=150):
-    start_point = point
-    step = 60
-    for tilt_angle in range(0, 360 - step, step):
-        v = sd.get_vector(start_point=start_point, angle=angle + tilt_angle, length=length)
-        v.draw()
-        start_point = v.end_point
-    sd.line(start_point=v.end_point, end_point=point)
-
-
-point_triangle = sd.get_point(250, 100)
-point_square = sd.get_point(750, 100)
-point_pentagon = sd.get_point(250, 550)
-point_hexagon = sd.get_point(750, 550)
-
-triangle(point=point_triangle, angle=30, length=200)
-
-square(point=point_square, angle=30, length=200)
-
-pentagon(point=point_pentagon, angle=30, length=175)
-
-hexagon(point=point_hexagon, angle=45, length=150)
-# TODO можно приступать ко второй части
 # Часть 1-бис.
 # Попробуйте прикинуть обьем работы, если нужно будет внести изменения в этот код.
 # Скажем, связывать точки не линиями, а дугами. Или двойными линиями. Или рисовать круги в угловых точках. Или...
@@ -148,6 +148,50 @@ hexagon(point=point_hexagon, angle=45, length=150)
 # А теперь - сколько надо работы что бы внести изменения в код? Выгода на лицо :)
 # Поэтому среди программистов есть принцип D.R.Y. https://clck.ru/GEsA9
 # Будьте ленивыми, не используйте копи-пасту!
+
+
+def figures(point, angle, length, step):
+    start_point = point
+    step = step
+    for tilt_angle in range(0, 360 - step, step):
+        v = sd.get_vector(start_point=start_point, angle=angle + tilt_angle, length=length)
+        v.draw()
+        start_point = v.end_point
+    sd.line(start_point=v.end_point, end_point=point)
+
+
+def triangle(point, angle=0, length=200):
+    step = 120
+    figures(point, angle, length, step)
+
+
+def square(point, angle=0, length=200):
+    step = 90
+    figures(point, angle, length, step)
+
+
+def pentagon(point, angle=0, length=175):
+    step = 72
+    figures(point, angle, length, step)
+
+
+def hexagon(point, angle=0, length=150):
+    step = 60
+    figures(point, angle, length, step)
+
+
+point_triangle = sd.get_point(250, 100)
+point_square = sd.get_point(750, 100)
+point_pentagon = sd.get_point(250, 550)
+point_hexagon = sd.get_point(750, 550)
+
+triangle(point=point_triangle, angle=30, length=200)
+
+square(point=point_square, angle=30, length=200)
+
+pentagon(point=point_pentagon, angle=30, length=175)
+
+hexagon(point=point_hexagon, angle=45, length=150)
 
 
 sd.pause()
