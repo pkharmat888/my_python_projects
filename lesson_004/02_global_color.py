@@ -82,7 +82,7 @@ colors = {
 }
 
 print('Возможные цвета: ')
-for t, i in colors.items():
+for t, i in colors.items():  # TODO t,i - примеры плохого нэйминга, можно ли в этом случае придумать что-то полезное?
     print(t, ':', i['color_name'])
 
 user_input = input('Введите желаемый цвет: ')

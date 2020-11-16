@@ -85,7 +85,7 @@ figures = {
 }
 
 print('Возможные фигуры: ')
-for q, w in figures.items():
+for q, w in figures.items():  # TODO q,w - та же история с нэймингом
     print(q, ':', w['figure_name'])
 
 input_figure = input('Введите желаемую фигуру: ')
@@ -94,7 +94,8 @@ while input_figure not in figures:
     print('Вы ввели некорректный номер !')
     input_figure = input('Введите желаемую фигуру: ')
 else:
-    number_of_figure = input_figure
+    number_of_figure = input_figure  # TODO еть ли смысл создавать ради этого действия новую переменную?
     color = colors[input_color]['sd_name']
     figures[number_of_figure]['fg_name'](point=central_point, figure_color=color, angle=30, length=200)
+    # TODO можно ведь тут использовать input figure просто
 sd.pause()
