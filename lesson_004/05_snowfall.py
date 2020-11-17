@@ -133,7 +133,7 @@ while True:
         if y_coordinates[index] < 50:
             old_index_list.append(index)
     # Сортирую список со "старыми" индексами
-    sorted(old_index_list, reverse=True)
+    old_index_list = sorted(old_index_list, reverse=True)
     # Если в списке "старых" индексов, находится хотя бы одно значение, то захожу в цикл и
     # удаляю старые и сразу же добавляю новые значения, в списки координат и размеров снежинки,
     # по индексу из списка "старых" индексов,
