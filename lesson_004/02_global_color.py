@@ -103,3 +103,4 @@ else:
     hexagon(point=point_hexagon, figure_color=color, angle=45, length=150)
 
 sd.pause()
+#зачёт!

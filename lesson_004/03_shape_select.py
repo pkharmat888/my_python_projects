@@ -94,3 +94,4 @@ else:
     color = colors[input_color]['sd_name']
     figures[input_figure]['fg_name'](point=central_point, figure_color=color, angle=30, length=200)
 sd.pause()
+#зачёт!
