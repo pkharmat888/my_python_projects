@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import simple_draw as sd
-# TODO импорты нужно указывать относительно рабочей директории в которой находится запускаемый файл
-# TODO т.е. например: не import rainbow, а from picture import rainbow
-import rainbow
-import house
-import snow
-import smile
-import tree
-import grass
-import sun
+from picture import rainbow
+from picture import house
+from picture import snow
+from picture import smile
+from picture import tree
+from picture import grass
+from picture import sun
 
 # Создать пакет, в который скопировать функции отрисовки из предыдущего урока
 #  - радуги
