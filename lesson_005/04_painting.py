@@ -84,3 +84,4 @@ while True:
     sd.sleep(0.01)
     sd.finish_drawing()
 sd.pause()
+#зачёт!

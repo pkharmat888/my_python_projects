@@ -17,3 +17,4 @@ my_list = [*(csh1r1.folks + csh1r2.folks + csh2r1.folks + csh2r2.folks + ssh1r1.
              + ssh1r2.folks + ssh2r1.folks + ssh2r2.folks)]
 
 print('На районе живут: ', ',\n '.join(my_list))
+#зачёт!
