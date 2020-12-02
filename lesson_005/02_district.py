@@ -17,7 +17,8 @@ from district.soviet_street.house1 import room1 as ssh2r1, room2 as ssh2r2
 def adding_to_list(from_list, some_list):
     for i in from_list:
         some_list.append(i)
-
+# TODO такую операцию можно заменить на extend, или, в данном случае, на суммирование списков
+# TODO т.е. просто написать итог = список_1 + список_2 ...
 
 my_list = []
 

@@ -153,3 +153,4 @@ while True:
     if sd.user_want_exit():
         break
 sd.pause()
+#зачёт!

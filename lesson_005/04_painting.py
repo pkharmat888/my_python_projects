@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import simple_draw as sd
+# TODO импорты нужно указывать относительно рабочей директории в которой находится запускаемый файл
+# TODO т.е. например: не import rainbow, а from picture import rainbow
 import rainbow
 import house
 import snow
