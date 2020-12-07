@@ -23,8 +23,10 @@ while True:
     snowflake_draw(color=sd.background_color)
     snowflakes_step()
     snowflake_draw(color=sd.COLOR_WHITE)
-    if any(snowflakes_end_numbers()):
-        delete_snowflakes()
+    if any(snowflakes_end_numbers()):  # TODO any можно убрать
+        # TODO да и в целом можно записать в переменную результат snowflakes_end_numbers()
+        # TODO проверять его тут
+        delete_snowflakes()  # TODO и передавать в эту функцию
         snowflakes_creating(count_of_snowflakes=10)
     sd.sleep(0.1)
     sd.finish_drawing()

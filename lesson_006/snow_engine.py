@@ -38,6 +38,7 @@ def snowflakes_step():
 
 def snowflakes_end_numbers():
     global _index
+    # TODO очищать список индексов лучше тут
     for _index, y in enumerate(_y_coordinates):
         if _y_coordinates[_index] < 25:
             _old_index_list.append(_index)
@@ -46,7 +47,9 @@ def snowflakes_end_numbers():
 
 
 def delete_snowflakes():
+    # TODO удалять надо не все координаты, а только те, индексы которых попали в _old_index_list
+    # TODO (т.е. нужен цикл по _old_index_list с удалением этих снежинок из всех списков
     _x_coordinates.clear()
     _y_coordinates.clear()
     _random_length.clear()
-    _old_index_list.clear()
+    _old_index_list.clear()  # TODO а не тут

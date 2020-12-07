@@ -26,6 +26,9 @@ move_counter = 0
 guessing_the_number()
 cprint('Компютер загадал число', color='cyan')
 while True:
+    # TODO Я бы советовал код получения числа и проверки этого числа
+    # TODO вынести в отдельную функцию, которая бы запускала в цикле input-ы до тех пор
+    # TODO Пока введенное число не будет соответствовать всем требованиям
     user_input = input(colored('Отгадайте число. Напишите ваш вариант: ', color='green'))
     if user_input.isnumeric():
         set_user_input = set(user_input)
