@@ -17,7 +17,7 @@ def snowflakes_creating(count_of_snowflakes):
         _x_coordinates.append(sd.random_number(0, 1800))
         _y_coordinates.append(sd.random_number(800, 900))
         _random_length.append(sd.random_number(10, 50))
-    return [_x_coordinates, _y_coordinates, _random_length]
+    return _x_coordinates, _y_coordinates, _random_length
 
 
 def snowflake_draw(color=sd.COLOR_DARK_BLUE):
@@ -38,7 +38,7 @@ def snowflakes_step():
 
 def snowflakes_end_numbers():
     global _index
-    # TODO очищать список индексов лучше тут
+    _old_index_list.clear()
     for _index, y in enumerate(_y_coordinates):
         if _y_coordinates[_index] < 25:
             _old_index_list.append(_index)
@@ -47,9 +47,7 @@ def snowflakes_end_numbers():
 
 
 def delete_snowflakes():
-    # TODO удалять надо не все координаты, а только те, индексы которых попали в _old_index_list
-    # TODO (т.е. нужен цикл по _old_index_list с удалением этих снежинок из всех списков
-    _x_coordinates.clear()
-    _y_coordinates.clear()
-    _random_length.clear()
-    _old_index_list.clear()  # TODO а не тут
+    for index in _old_index_list:
+        del _x_coordinates[index]
+        del _y_coordinates[index]
+        del _random_length[index]
