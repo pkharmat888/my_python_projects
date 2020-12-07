@@ -24,7 +24,7 @@ while True:
     snowflakes_step()
     snowflake_draw(color=sd.COLOR_WHITE)
     if snowflakes_end_numbers():
-        snowflakes_need_create = len(delete_snowflakes())
+        snowflakes_need_create = delete_snowflakes()
         snowflakes_creating(count_of_snowflakes=snowflakes_need_create)
     sd.sleep(0.1)
     sd.finish_drawing()
