@@ -44,7 +44,7 @@ while True:
         cprint('Колличество быков: {}, Колличество коров: {}'.format(result['bulls'], result['cows']), color='magenta')
         move_counter += 1
     else:
-        print('Вы должны ввести числа')
+        cprint('Вы должны ввести числа', color='red')
         continue
     if end_of_game():
         cprint('Колличество ходов сделанных игроком: {}'.format(move_counter), color='blue')
