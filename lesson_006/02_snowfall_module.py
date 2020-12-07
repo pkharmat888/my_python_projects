@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import simple_draw as sd
+from snow_engine import snowflakes_creating, snowflake_draw, snowflakes_step, snowflakes_end_numbers, delete_snowflakes
+
+sd.resolution = (1800, 1000)
 
 # На основе кода из lesson_004/05_snowfall.py
 # сделать модуль snowfall.py в котором реализовать следующие функции
@@ -14,15 +17,17 @@ import simple_draw as sd
 # В текущем модуле реализовать главный цикл падения снежинок,
 # обращаясь ТОЛЬКО к функциям модуля snowfall
 
-# создать_снежинки(N)
+snowflakes_creating(count_of_snowflakes=10)
 while True:
-    #  нарисовать_снежинки_цветом(color=sd.background_color)
-    #  сдвинуть_снежинки()
-    #  нарисовать_снежинки_цветом(color)
-    #  если есть номера_достигших_низа_экрана() то
-    #       удалить_снежинки(номера)
-    #       создать_снежинки(count)
+    sd.start_drawing()
+    snowflake_draw(color=sd.background_color)
+    snowflakes_step()
+    snowflake_draw(color=sd.COLOR_WHITE)
+    if any(snowflakes_end_numbers()):
+        delete_snowflakes()
+        snowflakes_creating(count_of_snowflakes=10)
     sd.sleep(0.1)
+    sd.finish_drawing()
     if sd.user_want_exit():
         break
 

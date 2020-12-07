@@ -1,33 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Игра «Быки и коровы»
-# https://goo.gl/Go2mb9
-#
-# Правила:
-# Компьютер загадывает четырехзначное число, все цифры которого различны
-# (первая цифра числа отлична от нуля). Игроку необходимо разгадать задуманное число.
-# Игрок вводит четырехзначное число c неповторяющимися цифрами,
-# компьютер сообщают о количестве «быков» и «коров» в названном числе
-# «бык» — цифра есть в записи задуманного числа и стоит в той же позиции,
-#       что и в задуманном числе
-# «корова» — цифра есть в записи задуманного числа, но не стоит в той же позиции,
-#       что и в задуманном числе
-#
-# Например, если задумано число 3275 и названо число 1234,
-# получаем в названном числе одного «быка» и одну «корову».
-# Очевидно, что число отгадано в том случае, если имеем 4 «быка».
-#
-# Формат ответа компьютера
-# > быки - 1, коровы - 1
 
-
-# Составить отдельный модуль mastermind_engine, реализующий функциональность игры.
-# В mastermind_engine нужно реализовать функции:
-#   загадать_число()
-#   проверить_число(NN) - возвращает словарь {'bulls': N, 'cows': N}
-# Загаданное число хранить в глобальной переменной.
-# Обратите внимание, что строки - это список символов.
-#
 # В текущем модуле (lesson_006/01_mastermind.py) реализовать логику работы с пользователем:
 #   модуль движка загадывает число
 #   в цикле, пока число не отгадано
@@ -44,4 +17,48 @@
 # Это пример применения SOLID принципа (см https://goo.gl/GFMoaI) в архитектуре программ.
 # Точнее, в этом случае важен принцип единственной ответственности - https://goo.gl/rYb3hT
 
-# TODO здесь ваш код...
+from mastermind_engine import guessing_the_number, check_number, end_of_game
+from termcolor import cprint, colored
+
+
+user_input = 0
+move_counter = 0
+guessing_the_number()
+cprint('Компютер загадал число', color='cyan')
+while True:
+    user_input = input(colored('Отгадайте число. Напишите ваш вариант: ', color='green'))
+    if user_input.isnumeric():
+        set_user_input = set(user_input)
+        if len(user_input) != len(set_user_input):
+            cprint('Вы ввели неверное число. Все цифры в числе должны быть уникальны',
+                   color='red')
+            continue
+        elif user_input[0] == '0':
+            cprint('Вы ввели неверное число. Число не может начинатся с нуля', color='red')
+            continue
+        elif len(user_input) != 4:
+            cprint('Вы ввели неверное число. Длинна числа должна равнятся четырем числам',
+                   color='red')
+            continue
+        result = check_number(user_input=user_input)
+        cprint('Колличество быков: {}, Колличество коров: {}'.format(result['bulls'], result['cows']), color='magenta')
+        move_counter += 1
+    else:
+        print('Вы должны ввести числа')
+        continue
+    if end_of_game():
+        cprint('Колличество ходов сделанных игроком: {}'.format(move_counter), color='blue')
+        while True:
+            answer = input(colored('Хотите еще партию ?  y/n  ', color='yellow'))
+            if answer == 'y':
+                move_counter = 0
+                cprint('Начало новой партии', color='yellow')
+                cprint('Компютер загадал число', color='cyan')
+                guessing_the_number()
+                continue
+            elif answer == 'n':
+                break
+        if answer == 'n':
+            cprint('Игра оконченна', color='red')
+            break
+
