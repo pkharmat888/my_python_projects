@@ -51,3 +51,4 @@ def delete_snowflakes():
         del _x_coordinates[index]
         del _y_coordinates[index]
         del _random_length[index]
+    return _old_index_list
