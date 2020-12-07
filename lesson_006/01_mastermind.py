@@ -55,7 +55,7 @@ while True:
                 cprint('Начало новой партии', color='yellow')
                 cprint('Компютер загадал число', color='cyan')
                 guessing_the_number()
-                continue
+                break
             elif answer == 'n':
                 break
         if answer == 'n':
