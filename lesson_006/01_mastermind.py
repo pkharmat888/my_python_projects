@@ -46,3 +46,4 @@ while True:
             cprint('Игра оконченна', color='red')
             break
 
+#зачёт!
