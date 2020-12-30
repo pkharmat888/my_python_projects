@@ -25,6 +25,8 @@ class Water:
         self.name = 'Вода'
 
     def __add__(self, other):
+        # TODO Такая проверка - антипаттерн,
+        # TODO В таких случаях стоит использовать проверку isinstance(other, Class)
         if other.name == 'Воздух':
             return Storm()
         elif other.name == 'Огонь':

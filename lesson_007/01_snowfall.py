@@ -10,6 +10,9 @@ import simple_draw as sd
 
 
 class Snowflake:
+    # TODO В этом задании класс Snowflake должен описывать одну единственную снежинку
+    # TODO Это позволит нам создать множество объектов Snowflake(), которые вместе будут создавать снегопад
+    # TODO Но при этом мы сможем легко контролировать каждую отдельную снежинку, описав её поведение в классе
     __list_of_flakes = []
     __list_of_fallen_flakes = []
 
@@ -34,15 +37,23 @@ class Snowflake:
         sd.snowflake(center=sd.get_point(self.x, self.y), length=self.length, color=sd.COLOR_WHITE)
 
     def can_fall(self):
+        # TODO В данном случае if/else блок лишний, можно оставить просто return с условием
+        # TODO Т.к. само по себе условие равно либо True, либо False
+        # TODO пример return a > b
         if self.y > 30:
             return self.y
 
+    # TODO эти методы надо реализовать либо отдельными функциями
+    # TODO либо в отдельном классе
+    # TODO методы применяются к какому-то конкретному объекту, который по сути и сам может быть удалён
+    # TODO поэтому лучше будет контролировать объекты "снаружи"
     def get_flakes(self, count):
         for flake in range(count):
             self.__list_of_flakes.append(Snowflake())
         return self.__list_of_flakes
 
     def get_fallen_flakes(self):
+        # TODO тут наоборот должен быть цикл по снежинкам и у каждой надо вызвать can_fall
         if not self.can_fall():
             for flake in self.__list_of_flakes:
                 self.__list_of_fallen_flakes.append(flake)
@@ -54,6 +65,9 @@ class Snowflake:
         for i in range(count):
             self.__list_of_flakes.append(Snowflake())
         return self.__list_of_flakes
+
+    # TODO ещё стоит добавить метод, который будет удалять упавшие
+    # TODO подумайте - как лучше реализовать такую функцию/метод (советую вспомнить 06.02)
 
 
 sd.resolution = (1800, 1000)

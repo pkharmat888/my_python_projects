@@ -66,6 +66,8 @@ class Man:
             cprint('{} деньги кончились!'.format(self.name), color='red')
 
     def get_the_cat(self, pet):
+        # TODO в целом всё верно, но тут тонкость есть
+        # TODO что будет, если мы применим этот метод к двум разным кошкам?
         self.pet = pet
         self.pet.house = self.house
         cprint('{} подобрал кота'.format(self.name), color='cyan')
