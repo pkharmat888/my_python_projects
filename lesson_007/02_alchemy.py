@@ -25,15 +25,13 @@ class Water:
         self.name = 'Вода'
 
     def __add__(self, other):
-        # TODO Такая проверка - антипаттерн,
-        # TODO В таких случаях стоит использовать проверку isinstance(other, Class)
-        if other.name == 'Воздух':
+        if isinstance(other, Air):
             return Storm()
-        elif other.name == 'Огонь':
+        elif isinstance(other, Fire):
             return Steam()
-        elif other.name == 'Земля':
+        elif isinstance(other, Earth):
             return Mud()
-        elif other.name == 'Пар':
+        elif isinstance(other, Steam):
             return RainFall()
         else:
             return None
@@ -48,11 +46,11 @@ class Air:
         self.name = 'Воздух'
 
     def __add__(self, other):
-        if other.name == 'Вода':
+        if isinstance(other, Water):
             return Storm()
-        elif other.name == 'Огонь':
+        elif isinstance(other, Fire):
             return Lightning()
-        elif other.name == 'Земля':
+        elif isinstance(other, Earth):
             return Dust()
         else:
             return None
@@ -67,11 +65,11 @@ class Fire:
         self.name = 'Огонь'
 
     def __add__(self, other):
-        if other.name == 'Вода':
+        if isinstance(other, Earth):
             return Steam()
-        elif other.name == 'Земля':
+        elif isinstance(other, Earth):
             return Lava()
-        elif other.name == 'Воздух':
+        elif isinstance(other, Air):
             return Lightning()
         else:
             return None
@@ -86,11 +84,11 @@ class Earth:
         self.name = 'Земля'
 
     def __add__(self, other):
-        if other.name == 'Вода':
+        if isinstance(other, Water):
             return Mud()
-        elif other.name == 'Воздух':
+        elif isinstance(other, Air):
             return Dust()
-        elif other.name == 'Огонь':
+        elif isinstance(other, Fire):
             return Lava()
         else:
             return None
@@ -114,7 +112,7 @@ class Steam:
         self.name = 'Пар'
 
     def __add__(self, other):
-        if other.name == 'Вода':
+        if isinstance(other, Water):
             return RainFall()
 
     def __str__(self):

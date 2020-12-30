@@ -34,6 +34,7 @@ class Man:
         self.fullness = 50
         self.house = None
         self.pet = None
+        self.pets = []
 
     def __str__(self):
         return 'Я - {}, сытость {}'.format(
@@ -66,10 +67,9 @@ class Man:
             cprint('{} деньги кончились!'.format(self.name), color='red')
 
     def get_the_cat(self, pet):
-        # TODO в целом всё верно, но тут тонкость есть
-        # TODO что будет, если мы применим этот метод к двум разным кошкам?
         self.pet = pet
         self.pet.house = self.house
+        self.pets.append(self.pet)
         cprint('{} подобрал кота'.format(self.name), color='cyan')
 
     def buy_cat_food(self):
