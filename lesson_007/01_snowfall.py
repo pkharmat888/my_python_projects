@@ -48,9 +48,7 @@ class Snowflakes:
         for index, flake in enumerate(self.__list_of_flakes):
             if flake.can_fall():
                 self.__list_of_fallen_flakes.append(index)
-                # TODO return будет обрывать цикл при первом же выполнении
-                # TODO попробуйте выполнять его после цикла for
-                return len(self.__list_of_fallen_flakes)
+        return len(self.__list_of_fallen_flakes)
 
     def append_flakes(self, count):
         self.delete_flakes()
@@ -59,7 +57,7 @@ class Snowflakes:
         return self.__list_of_flakes
 
     def delete_flakes(self):
-        # TODO не забывайте проблему сдвигов, удалять надо элементы, начиная с большего
+        self.__list_of_fallen_flakes.sort(reverse=True)
         for index in self.__list_of_fallen_flakes:
             del self.__list_of_flakes[index]
         self.__list_of_fallen_flakes.clear()
