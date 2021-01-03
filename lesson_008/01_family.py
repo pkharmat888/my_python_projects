@@ -77,6 +77,7 @@ class Peoples:
             return False
         elif self.fullness <= 20:
             self.eat()
+            return False
         elif self.house.house_dirt > 90:
             self.happiness -= 10
         return True
