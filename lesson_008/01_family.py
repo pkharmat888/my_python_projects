@@ -52,6 +52,8 @@ class Peoples:
         self.fullness = 30
         self.happiness = 100
         self.house = None
+        self.pet = None
+        self.pets = []
 
     def __str__(self):
         return 'Я {}, моя сытость {}, моя радость {}'.format(self.name, self.fullness, self.happiness)
@@ -67,6 +69,23 @@ class Peoples:
         self.house = house
         self.house.list_of_inhabitants.append(self.name)
         print('{}, заселился(-ась) в дом'.format(self.name))
+
+    def get_the_cat(self, pet):
+        self.pet = pet
+        self.pet.house = self.house
+        self.pets.append(self.pet)
+        cprint('{} подобрал(-а) кота'.format(self.name), color='cyan')
+
+    def buy_cat_food(self):
+        self.house.cat_food += 10
+        self.house.house_money -= 10
+        self.fullness -= 10
+        cprint('{} купил(-а) кошачьей еды'.format(self.name), color='green')
+
+    def pet_the_cat(self):
+        self.happiness += 5
+        self.fullness -= 10
+        cprint('{} погладил(-а) кота'.format(self.name), color='green')
 
     def act(self):
         if self.fullness <= 0:
@@ -88,6 +107,7 @@ class House:
     def __init__(self):
         self.house_money = 100
         self.house_food = 50
+        self.cat_food = 30
         self.house_dirt = 0
         self.peoples = None
         self.list_of_inhabitants = []
@@ -200,8 +220,6 @@ cprint('Всего было съедено {} едениц еды'.format(People
 cprint('Всего было шуб куплено {} едениц'.format(Wife.total_coats_bought), color='yellow')
 
 
-# TODO после реализации первой части - отдать на проверку учителю
-
 ######################################################## Часть вторая
 #
 # После подтверждения учителем первой части надо
@@ -227,22 +245,35 @@ cprint('Всего было шуб куплено {} едениц'.format(Wife.t
 # Если кот дерет обои, то грязи становится больше на 5 пунктов
 
 
-# class Cat:
-#
-#     def __init__(self):
-#         pass
-#
-#     def act(self):
-#         pass
-#
-#     def eat(self):
-#         pass
-#
-#     def sleep(self):
-#         pass
-#
-#     def soil(self):
-#         pass
+class Cat:
+
+    def __init__(self, name):
+        self.name = name
+        self.fullness = 30
+        self.house = None
+
+    def act(self):
+        if self.fullness <= 0:
+            cprint('Кот {} умер'.format(self.name), color='red')
+            return
+        dice = randint(0, 6)
+        if self.fullness < 30:
+            self.eat()
+        elif dice == 1:
+            self.soil()
+        elif dice == 2:
+            self.sleep()
+
+    def eat(self):
+        self.fullness += 20
+        self.house.cat_food -= 10
+
+    def sleep(self):
+        self.fullness -= 10
+
+    def soil(self):
+        self.house.house_dirt += 5
+        self.fullness -= 10
 
 
 ######################################################## Часть вторая бис
