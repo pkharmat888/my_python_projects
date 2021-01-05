@@ -44,7 +44,6 @@ from random import randint
 
 
 class Peoples:
-
     total_food_eaten = 0
 
     def __init__(self, name):
@@ -119,7 +118,6 @@ class House:
 
 
 class Husband(Peoples):
-
     total_money_earned = 0
 
     def __init__(self, name):
@@ -153,7 +151,6 @@ class Husband(Peoples):
 
 
 class Wife(Peoples):
-
     total_coats_bought = 0
 
     def __init__(self, name):
@@ -196,30 +193,6 @@ class Wife(Peoples):
         cprint('{} убралась в доме'.format(self.name), color='green')
 
 
-home = House()
-serge = Husband(name='Сережа')
-masha = Wife(name='Маша')
-
-serge.get_home(house=home)
-masha.get_home(house=home)
-
-for day in range(365):
-    cprint('================== День {} =================='.format(day), color='red')
-    home.house_dirt += 5
-    serge.act()
-    masha.act()
-    cprint('================== В конце дня ==================', color='yellow')
-    cprint(serge, color='cyan')
-    cprint(masha, color='cyan')
-    cprint(home, color='cyan')
-
-
-cprint('================== В конце года ==================', color='magenta')
-cprint('Всего было заработано денег {}'.format(Husband.total_money_earned), color='blue')
-cprint('Всего было съедено {} едениц еды'.format(Peoples.total_food_eaten), color='magenta')
-cprint('Всего было шуб куплено {} едениц'.format(Wife.total_coats_bought), color='yellow')
-
-
 ######################################################## Часть вторая
 #
 # После подтверждения учителем первой части надо
@@ -252,6 +225,9 @@ class Cat:
         self.fullness = 30
         self.house = None
 
+    def __str__(self):
+        return 'Я - {}. Моя сытость {}'.format(self.name, self.fullness)
+
     def act(self):
         if self.fullness <= 0:
             cprint('Кот {} умер'.format(self.name), color='red')
@@ -267,14 +243,44 @@ class Cat:
     def eat(self):
         self.fullness += 20
         self.house.cat_food -= 10
+        cprint('{} покушал(-а)'.format(self.name), color='blue')
 
     def sleep(self):
         self.fullness -= 10
+        cprint('Кот/Кошка {} поспала'.format(self.name), color='blue')
 
     def soil(self):
         self.house.house_dirt += 5
         self.fullness -= 10
+        cprint('{} подрал(-а) обои'.format(self.name), color='blue')
 
+
+home = House()
+serge = Husband(name='Сережа')
+masha = Wife(name='Маша')
+murka = Cat(name='Мурка')
+
+serge.get_home(house=home)
+masha.get_home(house=home)
+
+serge.get_the_cat(pet=murka)
+
+for day in range(365):
+    cprint('================== День {} =================='.format(day), color='red')
+    home.house_dirt += 5
+    serge.act()
+    masha.act()
+    murka.act()
+    cprint('================== В конце дня ==================', color='yellow')
+    cprint(serge, color='cyan')
+    cprint(masha, color='cyan')
+    cprint(murka, color='cyan')
+    cprint(home, color='cyan')
+
+cprint('================== В конце года ==================', color='magenta')
+cprint('Всего было заработано денег {}'.format(Husband.total_money_earned), color='blue')
+cprint('Всего было съедено {} едениц еды'.format(Peoples.total_food_eaten), color='magenta')
+cprint('Всего было шуб куплено {} едениц'.format(Wife.total_coats_bought), color='yellow')
 
 ######################################################## Часть вторая бис
 #
