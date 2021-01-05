@@ -176,32 +176,6 @@ class Wife(Peoples):
         cprint('{} убралась в доме'.format(self.name), color='green')
 
 
-home = House()
-serge = Husband(name='Сережа')
-masha = Wife(name='Маша')
-
-serge.get_home(house=home)
-masha.get_home(house=home)
-
-for day in range(365):
-    cprint('================== День {} =================='.format(day), color='red')
-    home.house_dirt += 5
-    serge.act()
-    masha.act()
-    cprint('================== В конце дня ==================', color='yellow')
-    cprint(serge, color='cyan')
-    cprint(masha, color='cyan')
-    cprint(home, color='cyan')
-
-
-cprint('================== В конце года ==================', color='magenta')
-cprint('Всего было заработано денег {}'.format(Husband.total_money_earned), color='blue')
-cprint('Всего было съедено {} едениц еды'.format(Peoples.total_food_eaten), color='magenta')
-cprint('Всего было шуб куплено {} едениц'.format(Wife.total_coats_bought), color='yellow')
-
-
-# TODO после реализации первой части - отдать на проверку учителю
-
 ######################################################## Часть вторая
 #
 # После подтверждения учителем первой части надо
@@ -265,23 +239,49 @@ class Child(Peoples):
         return super().__str__()
 
     def act(self):
-        super().act()  # TODO а почему тут не проверяется результат супер акта? (как у родителей например)
-        if self.fullness < 30:
-            self.eat()
-        elif self.house.house_dirt > 90:
-            self.happiness = 100
-        else:
-            self.sleep()
+        res = super().act()
+        if res:
+            if self.fullness < 30:
+                self.eat()
+            elif self.house.house_dirt > 90:
+                self.happiness = 100
+            else:
+                self.sleep()
 
     def eat(self):
         super().eat()
 
     def sleep(self):
         self.fullness -= 10
+        cprint('Ребенок {} поспал(-а)'.format(self.name), color='blue')
 
 
-# после реализации второй части - отдать на проверку учителем две ветки
-# TODO Тут должен быть код с запуском жизни с ребенком
+home = House()
+serge = Husband(name='Сережа')
+masha = Wife(name='Маша')
+sasha = Child(name='Саша')
+
+serge.get_home(house=home)
+masha.get_home(house=home)
+sasha.get_home(house=home)
+
+for day in range(365):
+    cprint('================== День {} =================='.format(day + 1), color='red')
+    home.house_dirt += 5
+    serge.act()
+    masha.act()
+    sasha.act()
+    cprint('================== В конце дня ==================', color='yellow')
+    cprint(serge, color='cyan')
+    cprint(masha, color='cyan')
+    cprint(sasha, color='cyan')
+    cprint(home, color='cyan')
+
+
+cprint('================== В конце года ==================', color='magenta')
+cprint('Всего было заработано денег {}'.format(Husband.total_money_earned), color='blue')
+cprint('Всего было съедено {} едениц еды'.format(Peoples.total_food_eaten), color='magenta')
+cprint('Всего было шуб куплено {} едениц'.format(Wife.total_coats_bought), color='yellow')
 
 ######################################################## Часть третья
 #
