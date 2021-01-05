@@ -256,22 +256,28 @@ cprint('Всего было шуб куплено {} едениц'.format(Wife.t
 # отличия от взрослых - кушает максимум 10 единиц еды,
 # степень счастья  - не меняется, всегда ==100 ;)
 
-# class Child:
-#
-#     def __init__(self):
-#         pass
-#
-#     def __str__(self):
-#         return super().__str__()
-#
-#     def act(self):
-#         pass
-#
-#     def eat(self):
-#         pass
-#
-#     def sleep(self):
-#         pass
+class Child(Peoples):
+
+    def __init__(self, name):
+        super().__init__(name=name)
+
+    def __str__(self):
+        return super().__str__()
+
+    def act(self):
+        super().act()
+        if self.fullness < 30:
+            self.eat()
+        elif self.house.house_dirt > 90:
+            self.happiness = 100
+        else:
+            self.sleep()
+
+    def eat(self):
+        super().eat()
+
+    def sleep(self):
+        self.fullness -= 10
 
 
 # TODO после реализации второй части - отдать на проверку учителем две ветки
