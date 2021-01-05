@@ -44,7 +44,6 @@ from random import randint
 
 
 class Peoples:
-
     total_food_eaten = 0
 
     def __init__(self, name):
@@ -52,6 +51,8 @@ class Peoples:
         self.fullness = 30
         self.happiness = 100
         self.house = None
+        self.pet = None
+        self.pets = []
 
     def __str__(self):
         return 'Я {}, моя сытость {}, моя радость {}'.format(self.name, self.fullness, self.happiness)
@@ -67,6 +68,23 @@ class Peoples:
         self.house = house
         self.house.list_of_inhabitants.append(self.name)
         print('{}, заселился(-ась) в дом'.format(self.name))
+
+    def get_the_cat(self, pet):
+        self.pet = pet
+        self.pet.house = self.house
+        self.pets.append(self.pet)
+        cprint('{} подобрал(-а) кота'.format(self.name), color='cyan')
+
+    def buy_cat_food(self):
+        self.house.cat_food += 10
+        self.house.house_money -= 10
+        self.fullness -= 10
+        cprint('{} купил(-а) кошачьей еды'.format(self.name), color='green')
+
+    def pet_the_cat(self):
+        self.happiness += 5
+        self.fullness -= 10
+        cprint('{} погладил(-а) кота'.format(self.name), color='green')
 
     def act(self):
         if self.fullness <= 0:
@@ -88,6 +106,7 @@ class House:
     def __init__(self):
         self.house_money = 100
         self.house_food = 50
+        self.cat_food = 30
         self.house_dirt = 0
         self.peoples = None
         self.list_of_inhabitants = []
@@ -99,7 +118,6 @@ class House:
 
 
 class Husband(Peoples):
-
     total_money_earned = 0
 
     def __init__(self, name):
@@ -133,7 +151,6 @@ class Husband(Peoples):
 
 
 class Wife(Peoples):
-
     total_coats_bought = 0
 
     def __init__(self, name):
@@ -201,23 +218,69 @@ class Wife(Peoples):
 # Если кот дерет обои, то грязи становится больше на 5 пунктов
 
 
-# class Cat:
-#
-#     def __init__(self):
-#         pass
-#
-#     def act(self):
-#         pass
-#
-#     def eat(self):
-#         pass
-#
-#     def sleep(self):
-#         pass
-#
-#     def soil(self):
-#         pass
+class Cat:
 
+    def __init__(self, name):
+        self.name = name
+        self.fullness = 30
+        self.house = None
+
+    def __str__(self):
+        return 'Я - {}. Моя сытость {}'.format(self.name, self.fullness)
+
+    def act(self):
+        if self.fullness <= 0:
+            cprint('Кот {} умер'.format(self.name), color='red')
+            return
+        dice = randint(0, 6)
+        if self.fullness < 30:
+            self.eat()
+        elif dice == 1:
+            self.soil()
+        elif dice == 2:
+            self.sleep()
+
+    def eat(self):
+        self.fullness += 20
+        self.house.cat_food -= 10
+        cprint('{} покушал(-а)'.format(self.name), color='blue')
+
+    def sleep(self):
+        self.fullness -= 10
+        cprint('Кот/Кошка {} поспала'.format(self.name), color='blue')
+
+    def soil(self):
+        self.house.house_dirt += 5
+        self.fullness -= 10
+        cprint('{} подрал(-а) обои'.format(self.name), color='blue')
+
+
+home = House()
+serge = Husband(name='Сережа')
+masha = Wife(name='Маша')
+murka = Cat(name='Мурка')
+
+serge.get_home(house=home)
+masha.get_home(house=home)
+
+serge.get_the_cat(pet=murka)
+
+for day in range(365):
+    cprint('================== День {} =================='.format(day), color='red')
+    home.house_dirt += 5
+    serge.act()
+    masha.act()
+    murka.act()
+    cprint('================== В конце дня ==================', color='yellow')
+    cprint(serge, color='cyan')
+    cprint(masha, color='cyan')
+    cprint(murka, color='cyan')
+    cprint(home, color='cyan')
+
+cprint('================== В конце года ==================', color='magenta')
+cprint('Всего было заработано денег {}'.format(Husband.total_money_earned), color='blue')
+cprint('Всего было съедено {} едениц еды'.format(Peoples.total_food_eaten), color='magenta')
+cprint('Всего было шуб куплено {} едениц'.format(Wife.total_coats_bought), color='yellow')
 
 ######################################################## Часть вторая бис
 #
