@@ -421,7 +421,6 @@ class Simulation:
 food_incidents = 0
 money_incidents = 0
 
-
 for salary in range(50, 401, 50):
     life = Simulation(money_incidents=money_incidents, food_incidents=food_incidents)
     food_incidents += 1
@@ -435,9 +434,6 @@ Man.total_food_eaten = 0
 Husband.total_money_earned = 0
 Wife.total_coats_bought = 0
 
-
-
-
 # food_incidents = 6
 # money_incidents = 6
 # salary = 150
@@ -445,3 +441,4 @@ Wife.total_coats_bought = 0
 # max_cats = life.experiment(salary=salary)
 # print('Случайных пропаж денег было - {}\nСлучайных пропаж еды было - {}'.format(money_incidents, food_incidents))
 # print(f'При зарплате {salary} максимально можно прокормить {max_cats} котов')
+#зачёт!
