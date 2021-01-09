@@ -56,7 +56,7 @@ class Man:
         self.pet = None
 
     # def __str__(self):
-    # return 'Я {}, моя сытость {}, моя радость {}'.format(self.name, self.fullness, self.happiness)
+    #     return 'Я {}, моя сытость {}, моя радость {}'.format(self.name, self.fullness, self.happiness)
 
     def eat(self):
         if self.house.house_food > 10:
@@ -67,7 +67,7 @@ class Man:
 
     def get_home(self, house):
         self.house = house
-        self.house.list_of_inhabitants.append(self.name)
+        self.house.list_of_inhabitants.append(self)
         # print('{}, заселился(-ась) в дом'.format(self.name))
 
     def get_the_cat(self, pet):
@@ -91,16 +91,24 @@ class Man:
     def act(self):
         if self.fullness <= 0:
             cprint('{} умер(ла)'.format(self.name), color='red')
+            if isinstance(self, (Husband, Wife, Child)):
+                for number, obj in enumerate(self.house.list_of_inhabitants):
+                    if self == obj:
+                        del self.house.list_of_inhabitants[number]
             return False
         elif self.happiness <= 10:
             cprint('{} умер(ла) от депрессии'.format(self.name), color='red')
+            if isinstance(self, (Husband, Wife, Child)):
+                for number, obj in enumerate(self.house.list_of_inhabitants):
+                    if self == obj:
+                        del self.house.list_of_inhabitants[number]
             return False
         elif self.fullness <= 10:
             self.eat()
             return False
         elif self.happiness <= 15:
             self.pet_the_cat()
-            cprint('{} погладил(-а) кота {}'.format(self.name, self.pet.name))
+            # cprint('{} погладил(-а) кота {}'.format(self.name, self.pet.name))
             return False
         elif self.house.house_dirt >= 90:
             self.happiness -= 10
@@ -117,11 +125,11 @@ class House:
         self.peoples = None
         self.list_of_inhabitants = []
 
-    def __str__(self):
-        return 'В доме осталось {} денег, {} еды. Дома есть грязь в колличестве {}. В доме живут {}\nКошачьей еды {}' \
-            .format(
-            self.house_money, self.house_food, self.house_dirt, self.list_of_inhabitants, self.cat_food
-        )
+    # def __str__(self):
+    #     # return 'В доме осталось {} денег, {} еды. Дома есть грязь в колличестве {}. В доме живут {}\nКошачьей еды {}' \
+    #         .format(
+    #         self.house_money, self.house_food, self.house_dirt, self.list_of_inhabitants, self.cat_food
+    #     )
 
 
 class Husband(Man):
@@ -169,8 +177,8 @@ class Wife(Man):
     def __init__(self, name):
         super().__init__(name=name)
 
-    # def __str__(self):
-    #     return super().__str__()
+    def __str__(self):
+        return super().__str__()
 
     def act(self):
         res = super().act()
@@ -221,9 +229,9 @@ class Cat:
             if len(Man.total_pets) != 0:
                 cprint('Кот {} умер'.format(self.name), color='red')
                 Man.total_pets_died.append(self.name)
-                for i in Man.total_pets:
-                    if i == self.name:
-                        Man.total_pets.remove(i)
+                for name in Man.total_pets:
+                    if name == self.name:
+                        Man.total_pets.remove(name)
                 return
         dice = randint(0, 8)
         if self.fullness <= 10:
@@ -321,7 +329,6 @@ class Child(Man):
 
 
 class Simulation:
-
     counter_of_money_incidents = 0
     counter_of_food_incidents = 0
     cat_names = ['Мурка', 'Маруся', 'Гарфилд', 'Сайлем', 'Кот Василий', 'Барсик']
@@ -352,16 +359,21 @@ class Simulation:
         for cat in Simulation.cats:
             self.serge.get_the_cat(pet=cat)
 
-        print(Man.total_pets)
-        print(Man.total_pets_died)
+        self.set_of_inhabitants = set(self.home.list_of_inhabitants)
 
-        # cprint('================== Начало ==================', color='red')
+        cprint('================== Начало ==================', color='red')
         # cprint(home, color='cyan')
         for day in range(365):
             # cprint('================== День {} =================='.format(day + 1), color='red')
             self.money_incident(day=day)
             self.food_incident(day=day)
             home.house_dirt += 5
+            if len(self.home.list_of_inhabitants) != len(self.set_of_inhabitants):
+                print('Кто-то из людей умер, прокормить котов нельзя')
+                break
+            if len(Man.total_pets) == 0:
+                print('Все коты умерли')
+                break
             self.serge.act()
             self.masha.act()
             self.sasha.act()
@@ -372,41 +384,46 @@ class Simulation:
             # cprint(self.serge, color='cyan')
             # cprint(self.masha, color='cyan')
             # cprint(self.sasha, color='cyan')
-            # cprint(self.murka, color='cyan')
+            # for self.cat in Simulation.cats:
+            #     cprint(self.cat, color='cyan')
             # cprint(home, color='cyan')
-        cprint('================== В конце года ==================', color='magenta')
-        cprint('Всего было заработано денег {}'.format(Husband.total_money_earned), color='blue')
-        cprint('Всего было съедено {} едениц еды'.format(Man.total_food_eaten), color='magenta')
-        cprint('Всего было шуб куплено {} едениц'.format(Wife.total_coats_bought), color='yellow')
-        cprint('Всего котов в семье {}'.format(len(Man.total_pets)), color='magenta')
-        cprint('Всего котов умерло {}'.format(len(Man.total_pets_died)), color='magenta')
-        how_mutch_cats = (len(Man.total_pets))
-        return how_mutch_cats
+        if len(self.home.list_of_inhabitants) == len(self.set_of_inhabitants):
+            cprint('================== В конце года ==================', color='magenta')
+            cprint('Всего было заработано денег {}'.format(Husband.total_money_earned), color='blue')
+            cprint('Всего было съедено {} едениц еды'.format(Man.total_food_eaten), color='magenta')
+            cprint('Всего было шуб куплено {} едениц'.format(Wife.total_coats_bought), color='yellow')
+            cprint('Всего котов в семье {}'.format(len(Man.total_pets)), color='magenta')
+            cprint('Всего котов умерло {}'.format(len(Man.total_pets_died)), color='magenta')
+            how_mutch_cats = (len(Man.total_pets))
+            return how_mutch_cats
 
     def money_incident(self, day):
         if self.counter_of_money_incidents < self.money_incidents:
             random_money_incident_day = randint(day, 365)
             if random_money_incident_day == day:
-                self.counter_of_money_incidents += 1
-                self.home.house_money /= 2
-                cprint('Пропало денег {} едениц'.format(int(self.home.house_money)), color='red')
-                cprint('Из тумбочки пропала половина денег', color='red')
+                if self.home.house_money >= 1:
+                    self.counter_of_money_incidents += 1
+                    self.home.house_money /= 2
+                    cprint('Пропало денег {} едениц'.format(int(self.home.house_money)), color='red')
+                    cprint('Из тумбочки пропала половина денег', color='red')
 
     def food_incident(self, day):
         if self.counter_of_food_incidents < self.food_incidents:
             random_food_incident_day = randint(day, 365)
             if random_food_incident_day == day:
-                self.counter_of_food_incidents += 1
-                self.home.house_food /= 2
-                cprint('Пропало еды {} едениц'.format(int(self.home.house_food)), color='red')
-                cprint('Из холодильника исчезло половина еды', color='red')
+                if self.home.house_food >= 1:
+                    self.counter_of_food_incidents += 1
+                    self.home.house_food /= 2
+                    cprint('Пропало еды {} едениц'.format(int(self.home.house_food)), color='red')
+                    cprint('Из холодильника исчезло половина еды', color='red')
 
 
 food_incidents = 0
 money_incidents = 0
 
-life = Simulation(money_incidents=money_incidents, food_incidents=food_incidents)
+
 for salary in range(50, 401, 50):
+    life = Simulation(money_incidents=money_incidents, food_incidents=food_incidents)
     food_incidents += 1
     money_incidents += 1
     max_cats = life.experiment(salary=salary)
@@ -414,6 +431,17 @@ for salary in range(50, 401, 50):
     print(f'При зарплате {salary} максимально можно прокормить {max_cats} котов')
     Simulation.cats.clear()
     Man.total_pets.clear()
+Man.total_food_eaten = 0
+Husband.total_money_earned = 0
+Wife.total_coats_bought = 0
 
-# x = Simulation(money_incidents=6, food_incidents=6)
-# x.experiment(salary=150)
+
+
+
+# food_incidents = 6
+# money_incidents = 6
+# salary = 150
+# life = Simulation(money_incidents=money_incidents, food_incidents=food_incidents)
+# max_cats = life.experiment(salary=salary)
+# print('Случайных пропаж денег было - {}\nСлучайных пропаж еды было - {}'.format(money_incidents, food_incidents))
+# print(f'При зарплате {salary} максимально можно прокормить {max_cats} котов')
