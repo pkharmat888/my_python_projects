@@ -55,9 +55,12 @@ class CharStatistics:
                         self.statistics[char] = 1
                     else:
                         self.statistics[char] += 1
-        return self.statistics
+        return self.statistics  # TODO куда уходит этот return? или вы его просто, на будущее создали?
 
     def sorting(self, statistics):
+        # TODO оставьте здесь одну строку
+        # TODO что-то вроде
+        # TODO self.сортированные_данные = сортед(...)
         self.statistics = statistics
         statistics_sorted_keys = sorted(self.statistics, key=self.statistics.get, reverse=True)
         for char in statistics_sorted_keys:
@@ -116,7 +119,8 @@ file.get_statistics()
 # print(f'|{"Итого":^10}|{total_chars:^10}|')
 # print(f'+{"+":-^21}+')
 
-
+# TODO для второй части попробуйте шаблонный метод применить
+# TODO создать наследников и переопределить только метод сортировки
 # После зачета первого этапа нужно сделать упорядочивание статистики
 #  - по частоте по возрастанию
 #  - по алфавиту по возрастанию

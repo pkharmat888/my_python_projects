@@ -67,6 +67,10 @@ class FileArranger:
                 shutil.copy2(src=name, dst=path_to_save_files_normalized)
             else:
                 os.makedirs(name=path_to_save_files_normalized, mode=0o777)
+                # TODO Чтобы не добавлять проверку if/else
+                # TODO используйте параметр exist_ok=True
+                # TODO И в makedirs можно передавать сразу несколько папок
+                # TODO (если передать ".../2017/06/", то makedirs рекурсивно создан и год и месяц)
                 shutil.copy2(src=name, dst=path_to_save_files_normalized)
             print(f'{name:<90} : {time:^10}')
 
@@ -74,7 +78,9 @@ class FileArranger:
         self.walk_in_dirs()
         self.sort_and_make_new_dirs()
 
-
+# TODO Нужно использовать относительные пути
+# TODO Перед этим стоит пометить lesson_009 как source_root
+# TODO А дальше уже относительно lesson_009 указывать остальные пути
 path_to_search_files = 'C:/python_base/lesson_009/icons'
 path_to_save_files = 'C:/python_base/lesson_009/icons_by_year'
 file = FileArranger(path_to_search_files=path_to_search_files, path_to_save_files=path_to_save_files)

@@ -82,7 +82,7 @@ file.get_logs()
 # with open(out_file_name, mode='w', encoding='utf8') as out_file:
 #     for time, counts in nok_log.items():
 #         out_file.write(f'{time} {counts}\n')
-
+# TODO И тут попробуйте создать наследников и изменить минимум кода, чтобы выполнялась другая группировка
 # После зачета первого этапа нужно сделать группировку событий
 #  - по часам
 #  - по месяцу
