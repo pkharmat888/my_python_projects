@@ -100,7 +100,6 @@ print(bytearray(b'hello'))
 print(bytearray('привет', encoding='utf-8'))
 print(bytearray('привет'.encode(encoding='utf-8')))
 
-
 # для преобразования байтов в строку и обратно есть две функции
 
 # строка в байты:

@@ -23,7 +23,65 @@
 #   см https://refactoring.guru/ru/design-patterns/template-method
 #   и https://gitlab.skillbox.ru/vadim_shandrinov/python_base_snippets/snippets/4
 
-# TODO здесь ваш код
+import os
+import time
+import io
+
+
+class LogParser:
+    nok_log = {}
+
+    def __init__(self, file_name):
+        self.file_name = file_name
+        self.out_file_name = 'NOK logs by minutes'
+
+    def file_open(self):
+        with open(self.file_name, mode='r') as file:
+            self._file_parse(file=file)
+
+    def _file_parse(self, file):
+        for line in file:
+            if 'NOK' in line:
+                date = time.strptime(line, '[%Y-%m-%d %H:%M:%S.%f] NOK ')
+                new_date = time.strftime('[%Y-%m-%d %H:%M]', date)
+                if new_date not in self.nok_log:
+                    self.nok_log[new_date] = 1
+                else:
+                    self.nok_log[new_date] += 1
+
+    def file_writing(self):
+        with open(self.out_file_name, mode='w', encoding='utf8') as out_file:
+            for time, counts in self.nok_log.items():
+                out_file.write(f'{time} {counts}\n')
+
+    def get_logs(self):
+        self.file_open()
+        self.file_writing()
+
+
+file_name = 'events.txt'
+file = LogParser(file_name=file_name)
+file.get_logs()
+
+
+# nok_log = {}
+#
+# file_name = 'events.txt'
+# out_file_name = 'NOK logs by minutes'
+
+# with open(file_name, mode='r') as file:
+#     for line in file:
+#         if 'NOK' in line:
+#             date = time.strptime(line, '[%Y-%m-%d %H:%M:%S.%f] NOK ')
+#             new_date = time.strftime('[%Y-%m-%d %H:%M]', date)
+#             if new_date not in nok_log:
+#                 nok_log[new_date] = 1
+#             else:
+#                 nok_log[new_date] += 1
+
+# with open(out_file_name, mode='w', encoding='utf8') as out_file:
+#     for time, counts in nok_log.items():
+#         out_file.write(f'{time} {counts}\n')
 
 # После зачета первого этапа нужно сделать группировку событий
 #  - по часам

@@ -4,6 +4,7 @@ import os
 import time
 import shutil
 
+
 # Нужно написать скрипт для упорядочивания фотографий (вообще любых файлов)
 # Скрипт должен разложить файлы из одной папки по годам и месяцам в другую.
 # Например, так:
@@ -40,7 +41,69 @@ import shutil
 #   см https://refactoring.guru/ru/design-patterns/template-method
 #   и https://gitlab.skillbox.ru/vadim_shandrinov/python_base_snippets/snippets/4
 
-# TODO здесь ваш код
+
+class FileArranger:
+    dict_of_last_change = {}
+
+    def __init__(self, path_to_search_files, path_to_save_files):
+        self.path_to_search_files = path_to_search_files
+        self.path_to_search_files_normalized = os.path.normpath(path_to_search_files)
+        self.path_to_save_files = path_to_save_files
+
+    def walk_in_dirs(self):
+        for dirpath, dirnames, filenames in os.walk(self.path_to_search_files_normalized):
+            for name in filenames:
+                file_to_search = os.path.join(dirpath, name)
+                time_of_last_change = os.path.getmtime(filename=file_to_search)
+                gmtime = time.gmtime(time_of_last_change)
+                years_and_months = time.strftime('%Y/%m', gmtime)
+                self.dict_of_last_change[file_to_search] = years_and_months
+
+    def sort_and_make_new_dirs(self):
+        for name, time in self.dict_of_last_change.items():
+            file_to_save = os.path.join(path_to_save_files, time)
+            path_to_save_files_normalized = os.path.normpath(file_to_save)
+            if os.path.exists(path_to_save_files_normalized):
+                shutil.copy2(src=name, dst=path_to_save_files_normalized)
+            else:
+                os.makedirs(name=path_to_save_files_normalized, mode=0o777)
+                shutil.copy2(src=name, dst=path_to_save_files_normalized)
+            print(f'{name:<90} : {time:^10}')
+
+    def arrange(self):
+        self.walk_in_dirs()
+        self.sort_and_make_new_dirs()
+
+
+path_to_search_files = 'C:/python_base/lesson_009/icons'
+path_to_save_files = 'C:/python_base/lesson_009/icons_by_year'
+file = FileArranger(path_to_search_files=path_to_search_files, path_to_save_files=path_to_save_files)
+file.arrange()
+
+# path_to_search_files = 'C:/python_base/lesson_009/icons'
+# path_to_search_files_normalized = os.path.normpath(path_to_search_files)
+#
+# path_to_save_files = 'C:/python_base/lesson_009/icons_by_year'
+#
+# dict_of_last_change = {}
+#
+# for dirpath, dirnames, filenames in os.walk(path_to_search_files_normalized):
+#     for name in filenames:
+#         file_to_search = os.path.join(dirpath, name)
+#         time_of_last_change = os.path.getmtime(filename=file_to_search)
+#         gmtime = time.gmtime(time_of_last_change)
+#         years_and_months = time.strftime('%Y/%m', gmtime)
+#         dict_of_last_change[file_to_search] = years_and_months
+#
+# for name, time in dict_of_last_change.items():
+#     file_to_save = os.path.join(path_to_save_files, time)
+#     path_to_save_files_normalized = os.path.normpath(file_to_save)
+#     if os.path.exists(path_to_save_files_normalized):
+#         shutil.copy2(src=name, dst=path_to_save_files_normalized)
+#     else:
+#         os.makedirs(name=path_to_save_files_normalized, mode=0o777)
+#         shutil.copy2(src=name, dst=path_to_save_files_normalized)
+#     print(f'{name:<90} : {time:^10}')
 
 # Усложненное задание (делать по желанию)
 # Нужно обрабатывать zip-файл, содержащий фотографии, без предварительного извлечения файлов в папку.
