@@ -31,23 +31,29 @@ import io
 class LogParser:
     nok_log = {}
 
-    def __init__(self, file_name):
+    def __init__(self, file_name, out_file_name):
         self.file_name = file_name
-        self.out_file_name = 'NOK logs by minutes'
+        self.out_file_name = out_file_name
 
     def file_open(self):
         with open(self.file_name, mode='r') as file:
-            self._file_parse(file=file)
+            self._file_read(file=file)
 
-    def _file_parse(self, file):
+    def _file_read(self, file):
         for line in file:
             if 'NOK' in line:
                 date = time.strptime(line, '[%Y-%m-%d %H:%M:%S.%f] NOK ')
-                new_date = time.strftime('[%Y-%m-%d %H:%M]', date)
-                if new_date not in self.nok_log:
-                    self.nok_log[new_date] = 1
-                else:
-                    self.nok_log[new_date] += 1
+                self._date(new_date=date)
+
+    def _date(self, new_date):
+        new_date = time.strftime('[%Y-%m-%d %H:%M]', new_date)
+        self._file_parse(new_date=new_date)
+
+    def _file_parse(self, new_date):
+        if new_date not in self.nok_log:
+            self.nok_log[new_date] = 1
+        else:
+            self.nok_log[new_date] += 1
 
     def file_writing(self):
         with open(self.out_file_name, mode='w', encoding='utf8') as out_file:
@@ -59,9 +65,9 @@ class LogParser:
         self.file_writing()
 
 
-file_name = 'events.txt'
-file = LogParser(file_name=file_name)
-file.get_logs()
+# file_name = 'events.txt'
+# file = LogParser(file_name=file_name)
+# file.get_logs()
 
 
 # nok_log = {}
@@ -82,8 +88,34 @@ file.get_logs()
 # with open(out_file_name, mode='w', encoding='utf8') as out_file:
 #     for time, counts in nok_log.items():
 #         out_file.write(f'{time} {counts}\n')
-# TODO И тут попробуйте создать наследников и изменить минимум кода, чтобы выполнялась другая группировка
+
+
 # После зачета первого этапа нужно сделать группировку событий
 #  - по часам
 #  - по месяцу
 #  - по году
+
+class LogParserByHours(LogParser):
+
+    def _date(self, new_date):
+        new_date = time.strftime('[%Y-%m-%d %H]', new_date)
+        self._file_parse(new_date=new_date)
+
+
+class LogParserByMonths(LogParser):
+
+    def _date(self, new_date):
+        new_date = time.strftime('[%Y-%m]', new_date)
+        self._file_parse(new_date=new_date)
+
+
+class LogParserByYears(LogParser):
+
+    def _date(self, new_date):
+        new_date = time.strftime('[%Y]', new_date)
+        self._file_parse(new_date=new_date)
+
+
+file_name = 'events.txt'
+file = LogParserByYears(file_name=file_name, out_file_name='NOK logs by years')
+file.get_logs()

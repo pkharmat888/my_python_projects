@@ -3,6 +3,8 @@
 import os
 import time
 import shutil
+import zipfile
+import zipfile as zp
 
 
 # Нужно написать скрипт для упорядочивания фотографий (вообще любых файлов)
@@ -50,41 +52,30 @@ class FileArranger:
         self.path_to_search_files_normalized = os.path.normpath(path_to_search_files)
         self.path_to_save_files = path_to_save_files
 
-    def walk_in_dirs(self):
+    def searching_files(self):
         for dirpath, dirnames, filenames in os.walk(self.path_to_search_files_normalized):
             for name in filenames:
                 file_to_search = os.path.join(dirpath, name)
-                time_of_last_change = os.path.getmtime(filename=file_to_search)
-                gmtime = time.gmtime(time_of_last_change)
-                years_and_months = time.strftime('%Y/%m', gmtime)
-                self.dict_of_last_change[file_to_search] = years_and_months
+                self._file_sort(file_to_search=file_to_search)
+
+    def _file_sort(self, file_to_search):
+        time_of_last_change = os.path.getmtime(filename=file_to_search)
+        gmtime = time.gmtime(time_of_last_change)
+        years_and_months = time.strftime('%Y/%m', gmtime)
+        self.dict_of_last_change[file_to_search] = years_and_months
 
     def sort_and_make_new_dirs(self):
         for name, time in self.dict_of_last_change.items():
             file_to_save = os.path.join(path_to_save_files, time)
             path_to_save_files_normalized = os.path.normpath(file_to_save)
-            if os.path.exists(path_to_save_files_normalized):
-                shutil.copy2(src=name, dst=path_to_save_files_normalized)
-            else:
-                os.makedirs(name=path_to_save_files_normalized, mode=0o777)
-                # TODO Чтобы не добавлять проверку if/else
-                # TODO используйте параметр exist_ok=True
-                # TODO И в makedirs можно передавать сразу несколько папок
-                # TODO (если передать ".../2017/06/", то makedirs рекурсивно создан и год и месяц)
-                shutil.copy2(src=name, dst=path_to_save_files_normalized)
+            os.makedirs(name=path_to_save_files_normalized, mode=0o777, exist_ok=True)
+            shutil.copy2(src=name, dst=path_to_save_files_normalized)
             print(f'{name:<90} : {time:^10}')
 
     def arrange(self):
-        self.walk_in_dirs()
+        self.searching_files()
         self.sort_and_make_new_dirs()
 
-# TODO Нужно использовать относительные пути
-# TODO Перед этим стоит пометить lesson_009 как source_root
-# TODO А дальше уже относительно lesson_009 указывать остальные пути
-path_to_search_files = 'C:/python_base/lesson_009/icons'
-path_to_save_files = 'C:/python_base/lesson_009/icons_by_year'
-file = FileArranger(path_to_search_files=path_to_search_files, path_to_save_files=path_to_save_files)
-file.arrange()
 
 # path_to_search_files = 'C:/python_base/lesson_009/icons'
 # path_to_search_files_normalized = os.path.normpath(path_to_search_files)
@@ -116,3 +107,18 @@ file.arrange()
 # Это относится только к чтению файлов в архиве. В случае паттерна "Шаблонный метод" изменяется способ
 # получения данных (читаем os.walk() или zip.namelist и т.д.)
 # Документация по zipfile: API https://docs.python.org/3/library/zipfile.html
+
+
+class FileArrangerFromZipFile(FileArranger):
+
+    def searching_files(self):
+        with zipfile.ZipFile(file=path_to_search_files, mode='r') as arhcive:
+            for name in arhcive.namelist():
+                if os.path.isfile(name):
+                    self._file_sort(file_to_search=name)
+
+
+path_to_search_files = 'icons.zip'
+path_to_save_files = 'icons_by_year'
+file = FileArrangerFromZipFile(path_to_search_files=path_to_search_files, path_to_save_files=path_to_save_files)
+file.arrange()

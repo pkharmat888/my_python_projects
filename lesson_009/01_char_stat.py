@@ -40,6 +40,7 @@ class CharStatistics:
         self.path_normalized = os.path.normpath(self.path)
         self.path_to_our_file = os.path.join(self.path_normalized, file_name)
         self.file = None
+        self.statistics_sorted_keys = None
 
     def file_open(self):
         with open(self.path_to_our_file, mode='r', encoding='cp1251') as file:
@@ -55,17 +56,13 @@ class CharStatistics:
                         self.statistics[char] = 1
                     else:
                         self.statistics[char] += 1
-        return self.statistics  # TODO куда уходит этот return? или вы его просто, на будущее создали?
 
-    def sorting(self, statistics):
-        # TODO оставьте здесь одну строку
-        # TODO что-то вроде
-        # TODO self.сортированные_данные = сортед(...)
-        self.statistics = statistics
-        statistics_sorted_keys = sorted(self.statistics, key=self.statistics.get, reverse=True)
-        for char in statistics_sorted_keys:
+    def sorting(self):
+        self.statistics_sorted_keys = sorted(self.statistics)
+
+    def make_new_sorted_statistics(self):
+        for char in self.statistics_sorted_keys:
             self.sorted_statistics[char] = self.statistics[char]
-        return self.sorted_statistics
 
     def visualise_data(self):
         print(f'+{"+":-^21}+')
@@ -79,13 +76,15 @@ class CharStatistics:
 
     def get_statistics(self):
         self.file_open()
-        self.sorting(statistics=self.statistics)
+        self.sorting()
+        self.make_new_sorted_statistics()
         self.visualise_data()
 
 
-file_name = 'voyna-i-mir.txt'
-file = CharStatistics(file_name=file_name)
-file.get_statistics()
+# file_name = 'voyna-i-mir.txt'
+# file = CharStatistics(file_name=file_name)
+# file.get_statistics()
+
 
 # file_name = 'voyna-i-mir.txt'
 # path = 'C:/python_base/lesson_009/python_snippets/'
@@ -119,9 +118,36 @@ file.get_statistics()
 # print(f'|{"Итого":^10}|{total_chars:^10}|')
 # print(f'+{"+":-^21}+')
 
-# TODO для второй части попробуйте шаблонный метод применить
-# TODO создать наследников и переопределить только метод сортировки
+
 # После зачета первого этапа нужно сделать упорядочивание статистики
 #  - по частоте по возрастанию
 #  - по алфавиту по возрастанию
 #  - по алфавиту по убыванию
+
+class CharStatisticsDescending(CharStatistics):
+
+    def sorting(self):
+        self.statistics_sorted_keys = sorted(self.statistics, key=self.statistics.get, reverse=True)
+
+
+class CharStatisticsAscending(CharStatistics):
+
+    def sorting(self):
+        self.statistics_sorted_keys = sorted(self.statistics, key=self.statistics.get)
+
+
+class CharStatisticsAlphabetAscending(CharStatistics):
+
+    def sorting(self):
+        self.statistics_sorted_keys = sorted(self.statistics)
+
+
+class CharStatisticsAlphabetDescending(CharStatistics):
+
+    def sorting(self):
+        self.statistics_sorted_keys = sorted(self.statistics, reverse=True)
+
+
+file_name = 'voyna-i-mir.txt'
+file = CharStatisticsAlphabetDescending(file_name=file_name)
+file.get_statistics()
