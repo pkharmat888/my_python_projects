@@ -151,3 +151,4 @@ class CharStatisticsAlphabetDescending(CharStatistics):
 file_name = 'voyna-i-mir.txt'
 file = CharStatisticsAlphabetDescending(file_name=file_name)
 file.get_statistics()
+#зачёт!

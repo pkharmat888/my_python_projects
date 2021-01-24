@@ -119,3 +119,4 @@ class LogParserByYears(LogParser):
 file_name = 'events.txt'
 file = LogParserByYears(file_name=file_name, out_file_name='NOK logs by years')
 file.get_logs()
+#зачёт!

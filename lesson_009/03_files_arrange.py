@@ -118,6 +118,7 @@ class FileArrangerFromZipFile(FileArranger):
                     self._file_sort(file_to_search=name)
 
 
+# TODO усложненное задание пока не работает (попробуйте удалить папку icons и запустить алгоритм)
 path_to_search_files = 'icons.zip'
 path_to_save_files = 'icons_by_year'
 file = FileArrangerFromZipFile(path_to_search_files=path_to_search_files, path_to_save_files=path_to_save_files)
