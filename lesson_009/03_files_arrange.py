@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
-
+import io
 import os
 import time
 import shutil
 import zipfile
-import zipfile as zp
 
 
 # Нужно написать скрипт для упорядочивания фотографий (вообще любых файлов)
@@ -112,14 +111,22 @@ class FileArranger:
 class FileArrangerFromZipFile(FileArranger):
 
     def searching_files(self):
-        with zipfile.ZipFile(file=path_to_search_files, mode='r') as arhcive:
-            for name in arhcive.namelist():
-                if os.path.isfile(name):
-                    self._file_sort(file_to_search=name)
+        with zipfile.ZipFile(file=path_to_search_files, mode='r') as archive:
+            for name in archive.namelist():
+                info = archive.getinfo(name)
+                year, month, day, hour, minute, second = info.date_time
+                new_path = os.path.join(path_to_save_files, str(year), str(month))
+                if not info.is_dir():
+                    info.filename = os.path.basename(info.filename)
+                    archive.extract(member=name, path=new_path)
 
 
-# TODO усложненное задание пока не работает (попробуйте удалить папку icons и запустить алгоритм)
 path_to_search_files = 'icons.zip'
 path_to_save_files = 'icons_by_year'
 file = FileArrangerFromZipFile(path_to_search_files=path_to_search_files, path_to_save_files=path_to_save_files)
 file.arrange()
+
+# path_to_search_files = 'icons'
+# path_to_save_files = 'icons_by_year'
+# file = FileArranger(path_to_search_files=path_to_search_files, path_to_save_files=path_to_save_files)
+# file.arrange()
