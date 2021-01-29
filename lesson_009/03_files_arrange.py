@@ -130,3 +130,4 @@ file.arrange()
 # path_to_save_files = 'icons_by_year'
 # file = FileArranger(path_to_search_files=path_to_search_files, path_to_save_files=path_to_save_files)
 # file.arrange()
+#зачёт!
