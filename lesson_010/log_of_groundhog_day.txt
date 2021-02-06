@@ -1,13 +1,7 @@
-Ошибка типа - <class '__main__.CarCrashError'>
-Ошибка типа - <class '__main__.GluttonyError'>
-Ошибка типа - <class '__main__.CarCrashError'>
-Ошибка типа - <class '__main__.DrunkError'>
-Ошибка типа - <class '__main__.SuicideError'>
-Ошибка типа - <class '__main__.DrunkError'>
-Ошибка типа - <class '__main__.IamGodError'>
-Ошибка типа - <class '__main__.GluttonyError'>
-Ошибка типа - <class '__main__.CarCrashError'>
-Ошибка типа - <class '__main__.DrunkError'>
-Ошибка типа - <class '__main__.GluttonyError'>
-Ошибка типа - <class '__main__.SuicideError'>
-Ошибка типа - <class '__main__.DrunkError'>
+Ошибка типа - Ошибка типа - <class '__main__.CarCrashError'>
+Ошибка типа - Ошибка типа - <class '__main__.GluttonyError'>
+Ошибка типа - Ошибка типа - <class '__main__.CarCrashError'>
+Ошибка типа - Ошибка типа - <class '__main__.CarCrashError'>
+Ошибка типа - Ошибка типа - <class '__main__.IamGodError'>
+Ошибка типа - Ошибка типа - <class '__main__.GluttonyError'>
+Ошибка типа - Ошибка типа - <class '__main__.SuicideError'>

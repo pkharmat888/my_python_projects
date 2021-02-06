@@ -51,26 +51,19 @@ def one_day():
     carma = random.randint(1, 8)
     probability = random.randint(1, 14)
     if probability == random.randint(1, 14):
-        exc = random.choice(list_of_errors)
-        file = open(file='log_of_groundhog_day.txt', mode='a', encoding='utf8')
-        try:  # TODO try/except тут не нужен, только raise случайной ошибки
-            raise exc
-        except:
-            file.write(f'Ошибка типа - {exc}\n')
-        finally:
-            file.close()
-
+        error = random.choice(list_of_errors)
+        raise error(f'Ошибка типа - {error}')
     return carma
 
 
 total_carma = 0
-while True:
-    # TODO а вот тут уже try/except
-    total_carma += one_day()
-    print(total_carma)
-    if total_carma >= ENLIGHTENMENT_CARMA_LEVEL:  # TODO это условие надо в while добавить, вместо True
-        break
 
-# TODO Открытие/закрытие файлов (оператор with именно это и делает)
-# TODO это довольно трудоёмкое занятие. Поэтому его нужно стараться выносить из цикла.
-# TODO Открывать файл один раз до цикла и закрывать один раз, уже после цикла.
+with open(file='log_of_groundhog_day.txt', mode='w', encoding='utf8') as file:
+    while total_carma <= ENLIGHTENMENT_CARMA_LEVEL:
+        print(total_carma)
+        try:
+            total_carma += one_day()
+            print(total_carma)
+        except Exception as exc:
+            print(exc)
+            file.write(f'Ошибка типа - {exc}\n')
