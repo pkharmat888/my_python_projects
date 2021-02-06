@@ -53,7 +53,7 @@ def one_day():
     if probability == random.randint(1, 14):
         exc = random.choice(list_of_errors)
         file = open(file='log_of_groundhog_day.txt', mode='a', encoding='utf8')
-        try:
+        try:  # TODO try/except тут не нужен, только raise случайной ошибки
             raise exc
         except:
             file.write(f'Ошибка типа - {exc}\n')
@@ -65,7 +65,12 @@ def one_day():
 
 total_carma = 0
 while True:
+    # TODO а вот тут уже try/except
     total_carma += one_day()
     print(total_carma)
-    if total_carma >= ENLIGHTENMENT_CARMA_LEVEL:
+    if total_carma >= ENLIGHTENMENT_CARMA_LEVEL:  # TODO это условие надо в while добавить, вместо True
         break
+
+# TODO Открытие/закрытие файлов (оператор with именно это и делает)
+# TODO это довольно трудоёмкое занятие. Поэтому его нужно стараться выносить из цикла.
+# TODO Открывать файл один раз до цикла и закрывать один раз, уже после цикла.
