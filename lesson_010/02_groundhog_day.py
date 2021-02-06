@@ -16,9 +16,56 @@
 # кармы до уровня ENLIGHTENMENT_CARMA_LEVEL. Исключения обработать и записать в лог.
 # При создании собственных исключений максимально использовать функциональность
 # базовых встроенных исключений.
+import random
+
+
+class IamGodError(Exception):
+    pass
+
+
+class DrunkError(Exception):
+    pass
+
+
+class CarCrashError(Exception):
+    pass
+
+
+class GluttonyError(Exception):
+    pass
+
+
+class DepressionError(Exception):
+    pass
+
+
+class SuicideError(Exception):
+    pass
+
 
 ENLIGHTENMENT_CARMA_LEVEL = 777
 
-# TODO здесь ваш код
 
-# https://goo.gl/JnsDqu
+def one_day():
+    list_of_errors = [IamGodError, DrunkError, CarCrashError, GluttonyError, DepressionError, SuicideError]
+    carma = random.randint(1, 8)
+    probability = random.randint(1, 14)
+    if probability == random.randint(1, 14):
+        exc = random.choice(list_of_errors)
+        file = open(file='log_of_groundhog_day.txt', mode='a', encoding='utf8')
+        try:
+            raise exc
+        except:
+            file.write(f'Ошибка типа - {exc}\n')
+        finally:
+            file.close()
+
+    return carma
+
+
+total_carma = 0
+while True:
+    total_carma += one_day()
+    print(total_carma)
+    if total_carma >= ENLIGHTENMENT_CARMA_LEVEL:
+        break
