@@ -67,3 +67,4 @@ with open(file='log_of_groundhog_day.txt', mode='w', encoding='utf8') as file:
         except Exception as exc:
             print(exc)
             file.write(f'Ошибка типа - {exc}\n')
+#зачёт!

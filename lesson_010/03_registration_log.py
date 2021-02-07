@@ -71,3 +71,4 @@ for line in file:
 registrations_good.close()
 registrations_bad.close()
 file.close()
+#зачёт!
