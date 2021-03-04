@@ -15,11 +15,9 @@ import simple_draw as sd
 
 
 def get_polygon(n):
-    def figures(point, angle, length, step):
-        # TODO внутри этой функции надо использовать 'n' для расчёта step
-        # TODO тогда мы сможем просто убрать функции обертки (это будет замена им)
+    def figures(point, angle, length):
         start_point = point
-        step = step
+        step = 360//n
         for tilt_angle in range(0, 360 - step, step):
             v = sd.get_vector(start_point=start_point, angle=angle + tilt_angle, length=length)
             v.draw()
@@ -27,32 +25,16 @@ def get_polygon(n):
         sd.line(start_point=v.end_point, end_point=point)
 
     if n == 3:
-        def triangle(point, angle=0, length=200):
-            step = 120
-            figures(point, angle, length, step)
-
-        return triangle
+        return figures
 
     if n == 4:
-        def square(point, angle=0, length=200):
-            step = 90
-            figures(point, angle, length, step)
-
-        return square
+        return figures
 
     if n == 5:
-        def pentagon(point, angle=0, length=175):
-            step = 72
-            figures(point, angle, length, step)
-
-        return pentagon
+        return figures
 
     if n == 6:
-        def hexagon(point, angle=0, length=150):
-            step = 60
-            figures(point, angle, length, step)
-
-        return hexagon
+        return figures
 
 
 sd.resolution = (1200, 1000)
