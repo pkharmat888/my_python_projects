@@ -8,18 +8,43 @@
 # Лог файл открывать каждый раз при ошибке в режиме 'a'
 
 
-def log_errors(func):
-    pass
-    # TODO здесь ваш код
+# def log_errors(func):
+#     def surrogate(*args, **kwargs):
+#         try:
+#             result = func(*args, **kwargs)
+#             return result
+#         except Exception as exc:
+#             with open(file='function_errors.log', mode='a', encoding='utf8') as log:
+#                 log.write(f'Function name - "{func.__name__}"\nCall parameters - {args, kwargs}\nError type - "{type(exc)}"\nError text - "{exc.args[0]}"\n')
+#             raise exc
+#     return surrogate
+
+def log_errors(file_name):
+    def get_func(func):
+        def surrogate(*args, **kwargs):
+            try:
+                result = func(*args, **kwargs)
+                return result
+            except Exception as exc:
+                with open(file=file_name, mode='a', encoding='utf8') as log:
+                    log.write(
+                        f'Function name - "{func.__name__}"\nCall parameters - {args, kwargs}\nError type - "{type(exc)}"\nError text - "{exc.args[0]}"\n')
+                raise exc
+
+        return surrogate
+
+    return get_func
 
 
 # Проверить работу на следующих функциях
-@log_errors
-def perky(param):
-    return param / 0
+# @log_errors
+# def perky(param):
+#     return param / 0
+#
+#
+# perky(param=10)
 
-
-@log_errors
+@log_errors('function_errors.log')
 def check_line(line):
     name, email, age = line.split(' ')
     if not name.isalpha():
@@ -43,7 +68,7 @@ for line in lines:
         check_line(line)
     except Exception as exc:
         print(f'Invalid format: {exc}')
-perky(param=42)
+# perky(param=42)
 
 
 # Усложненное задание (делать по желанию).
