@@ -28,7 +28,8 @@ def log_errors(file_name):
             except Exception as exc:
                 with open(file=file_name, mode='a', encoding='utf8') as log:
                     log.write(
-                        f'Function name - "{func.__name__}"\nCall parameters - {args, kwargs}\nError type - "{type(exc)}"\nError text - "{exc.args[0]}"\n')
+                        f'Function name - "{func.__name__}"\nCall parameters - {args, kwargs}'
+                        f'\nError type - "{type(exc)}"\nError text - "{exc.args[0]}"\n')
                 raise exc
 
         return surrogate
@@ -77,3 +78,4 @@ for line in lines:
 # @log_errors('function_errors.log')
 # def func():
 #     pass
+#зачёт!

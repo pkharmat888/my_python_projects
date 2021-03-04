@@ -39,3 +39,4 @@ grouped_events = log_parser(file_name='events.txt')
 
 for group_time, event_count in grouped_events:
     print(f'[{group_time}] {event_count}')
+#зачёт!

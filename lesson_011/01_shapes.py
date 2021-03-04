@@ -16,6 +16,8 @@ import simple_draw as sd
 
 def get_polygon(n):
     def figures(point, angle, length, step):
+        # TODO внутри этой функции надо использовать 'n' для расчёта step
+        # TODO тогда мы сможем просто убрать функции обертки (это будет замена им)
         start_point = point
         step = step
         for tilt_angle in range(0, 360 - step, step):
