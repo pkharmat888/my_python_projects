@@ -24,6 +24,7 @@ def get_polygon(n):
             start_point = v.end_point
         sd.line(start_point=v.end_point, end_point=point)
 
+    # TODO каждый выбор ведет к возврату figures, может тогда убрать эти if-ы?)
     if n == 3:
         return figures
 
