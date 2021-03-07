@@ -56,24 +56,23 @@
 # Распечатать все простые числа до 10000 в столбик
 
 
-def prime_numbers_generator(n):
-    prime_numbers = []
-    counter = 1
-    while counter < n:
-        counter += 1
-        for prime in prime_numbers:
-            if counter % prime == 0:
-                break
-        else:
-            prime_numbers.append(counter)
-            yield counter
+# def prime_numbers_generator(n):
+#     prime_numbers = []
+#     counter = 1
+#     while counter < n:
+#         counter += 1
+#         for prime in prime_numbers:
+#             if counter % prime == 0:
+#                 break
+#         else:
+#             prime_numbers.append(counter)
+#             yield counter
+#
+#
+# for number in prime_numbers_generator(n=10000):
+#     print(number)
 
 
-for number in prime_numbers_generator(n=10000):
-    print(number)
-
-
-# TODO Можно приступать к третьей части!
 # Часть 3
 # Написать несколько функций-фильтров, которые выдает True, если число:
 # 1) "счастливое" в обыденном пониманиии - сумма первых цифр равна сумме последних
@@ -89,3 +88,102 @@ for number in prime_numbers_generator(n=10000):
 # простых счастливых палиндромных чисел и так далее. Придумать не менее 2х способов.
 #
 # Подсказка: возможно, нужно будет добавить параметр в итератор/генератор.
+
+
+# def mersenne_numbers_generator(number):
+#     counter = 1
+#     while counter < number:
+#         mersenne_number = (2**counter) - 1
+#         yield mersenne_number
+#         counter += 1
+
+
+def lucky_numbers(number):
+    number = str(number)
+    number_len = len(number)
+    if number_len > 1:
+        first_part = number[0:number_len // 2]
+        first_part_list = map(int, first_part)
+        first_part = sum(list(first_part_list))
+
+        if number_len % 2 == 0:
+            second_part = number[number_len // 2:]
+        else:
+            second_part = number[(number_len // 2) + 1:]
+
+        second_part_list = map(int, second_part)
+        second_part = sum(list(second_part_list))
+
+        if first_part == second_part:
+            return True
+        else:
+            return False
+    else:
+        return False
+
+
+def palindrome_numbers(number):
+    number = str(number)
+    if number == number[::-1] and len(number) > 1:
+        return True
+    else:
+        return False
+
+
+#   Числа Мерсенна
+def mersenne_numbers(number):
+    mersenne_numbers_list = [1, 3, 7, 15, 31, 63, 127, 255, 511, 1023, 2047, 4095, 8191]
+    if number in mersenne_numbers_list:
+        return True
+    else:
+        return False
+
+
+def prime_numbers_generator_with_func(n, func):
+    prime_numbers = []
+    counter = 1
+    while counter < n:
+        counter += 1
+        for prime in prime_numbers:
+            if counter % prime == 0:
+                break
+        else:
+            prime_numbers.append(counter)
+            if func(counter):       # В это условие можем передавать функцию фильтр и генерировать только те числа,
+                yield counter       # которые соответствуют условию
+                                    # Это первый способ применения фильтров
+
+
+# for number in prime_numbers_generator_with_func(n=10000, func=lucky_numbers):
+#     print(number)
+#
+
+
+def prime_numbers_generator(n):
+    prime_numbers = []
+    counter = 1
+    while counter < n:
+        counter += 1
+        for prime in prime_numbers:
+            if counter % prime == 0:
+                break
+        else:
+            prime_numbers.append(counter)
+            yield counter
+
+
+#   Второй способ фильтрации
+# res = filter(lucky_numbers, prime_numbers_generator(n=10000))
+# print(list(res))
+# res = filter(palindrome_numbers, prime_numbers_generator(n=10000))
+# print(list(res))
+# res = filter(mersenne_numbers, prime_numbers_generator(n=10000))
+# print(list(res))
+
+#   Третий способ фильтрации
+res = [x for x in prime_numbers_generator(n=10000) if lucky_numbers(x)]
+print(res)
+res = [x for x in prime_numbers_generator(n=10000) if palindrome_numbers(x)]
+print(res)
+res = [x for x in prime_numbers_generator(n=10000) if mersenne_numbers(x)]
+print(res)
