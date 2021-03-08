@@ -102,43 +102,22 @@ def lucky_numbers(number):
     number = str(number)
     number_len = len(number)
     if number_len > 1:
-        first_part = number[0:number_len // 2]
+        middle = number_len // 2
+        first_part = number[:middle]
         first_part_list = map(int, first_part)
         first_part = sum(list(first_part_list))
 
-        # TODO Левую и правую части можно найти проще, если использовать отрицательный срез
-        # TODO х = 12345
-        # TODO середина = 5//2 = 2
-        # TODO x[:2] = 12
-        # TODO x[-2:] = 45
-        # TODO х = 1245
-        # TODO середина = 4//2 = 2
-        # TODO x[:2] = 12
-        # TODO x[-2:] = 45
-        if number_len % 2 == 0:
-            second_part = number[number_len // 2:]
-        else:
-            second_part = number[(number_len // 2) + 1:]
-
+        second_part = number[-middle:]
         second_part_list = map(int, second_part)
         second_part = sum(list(second_part_list))
-
-        if first_part == second_part:
-            # TODO возвращать в таких случаях стоит само условие (Пример: return a>b)
-            return True
-        else:
-            return False
+        return first_part == second_part
     else:
         return False
 
 
 def palindrome_numbers(number):
     number = str(number)
-    # TODO Палиндром можно получить в одну строку (ретурн строка == перевернутая строка)
-    if number == number[::-1] and len(number) > 1:
-        return True
-    else:
-        return False
+    return number == number[::-1] and len(number) > 1
 
 
 #   Числа Мерсенна
@@ -150,19 +129,19 @@ def mersenne_numbers(number):
         return False
 
 
-def prime_numbers_generator_with_func(n, func):
-    prime_numbers = []
-    counter = 1
-    while counter < n:
-        counter += 1
-        for prime in prime_numbers:
-            if counter % prime == 0:
-                break
-        else:
-            prime_numbers.append(counter)
-            if func(counter):       # В это условие можем передавать функцию фильтр и генерировать только те числа,
-                yield counter       # которые соответствуют условию
-                                    # Это первый способ применения фильтров
+# def prime_numbers_generator_with_func(n, func):
+#     prime_numbers = []
+#     counter = 1
+#     while counter < n:
+#         counter += 1
+#         for prime in prime_numbers:
+#             if counter % prime == 0:
+#                 break
+#         else:
+#             prime_numbers.append(counter)
+#             if func(counter):       # В это условие можем передавать функцию фильтр и генерировать только те числа,
+#                 yield counter       # которые соответствуют условию
+                                      # Это первый способ применения фильтров
 
 
 # for number in prime_numbers_generator_with_func(n=10000, func=lucky_numbers):
@@ -192,12 +171,29 @@ def prime_numbers_generator(n):
 # print(list(res))
 
 #   Третий способ фильтрации
-res = [x for x in prime_numbers_generator(n=10000) if lucky_numbers(x)]
-print(res)
-res = [x for x in prime_numbers_generator(n=10000) if palindrome_numbers(x)]
-print(res)
-res = [x for x in prime_numbers_generator(n=10000) if mersenne_numbers(x)]
-print(res)
+# res = [x for x in prime_numbers_generator(n=10000) if lucky_numbers(x)]
+# print(res)
+# res = [x for x in prime_numbers_generator(n=10000) if palindrome_numbers(x)]
+# print(res)
+# res = [x for x in prime_numbers_generator(n=10000) if mersenne_numbers(x)]
+# print(res)
 
-# TODO (на подумать, не обязательно выполнять) Можно ли передавать в генератор несколько функций разом?
-# TODO При этом сделать это так, чтобы можно было бы передавать неограниченное количество функций (в теории)
+
+def prime_numbers_generator_with_func(n, func):
+    prime_numbers = []
+    counter = 1
+    while counter < n:
+        counter += 1
+        for prime in prime_numbers:
+            if counter % prime == 0:
+                break
+        else:
+            prime_numbers.append(counter)
+            if func(counter):
+                yield counter
+
+
+functions = [lucky_numbers, palindrome_numbers, mersenne_numbers]
+for func in functions:
+    for number in prime_numbers_generator_with_func(n=10000, func=func):
+        print(number)
