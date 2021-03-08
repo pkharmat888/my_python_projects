@@ -106,6 +106,15 @@ def lucky_numbers(number):
         first_part_list = map(int, first_part)
         first_part = sum(list(first_part_list))
 
+        # TODO Левую и правую части можно найти проще, если использовать отрицательный срез
+        # TODO х = 12345
+        # TODO середина = 5//2 = 2
+        # TODO x[:2] = 12
+        # TODO x[-2:] = 45
+        # TODO х = 1245
+        # TODO середина = 4//2 = 2
+        # TODO x[:2] = 12
+        # TODO x[-2:] = 45
         if number_len % 2 == 0:
             second_part = number[number_len // 2:]
         else:
@@ -115,6 +124,7 @@ def lucky_numbers(number):
         second_part = sum(list(second_part_list))
 
         if first_part == second_part:
+            # TODO возвращать в таких случаях стоит само условие (Пример: return a>b)
             return True
         else:
             return False
@@ -124,6 +134,7 @@ def lucky_numbers(number):
 
 def palindrome_numbers(number):
     number = str(number)
+    # TODO Палиндром можно получить в одну строку (ретурн строка == перевернутая строка)
     if number == number[::-1] and len(number) > 1:
         return True
     else:
@@ -187,3 +198,6 @@ res = [x for x in prime_numbers_generator(n=10000) if palindrome_numbers(x)]
 print(res)
 res = [x for x in prime_numbers_generator(n=10000) if mersenne_numbers(x)]
 print(res)
+
+# TODO (на подумать, не обязательно выполнять) Можно ли передавать в генератор несколько функций разом?
+# TODO При этом сделать это так, чтобы можно было бы передавать неограниченное количество функций (в теории)

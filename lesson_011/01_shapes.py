@@ -45,3 +45,4 @@ draw_pentagon(point=point_pentagon, angle=13, length=175)
 draw_hexagon(point=point_hexagon, angle=13, length=150)
 
 sd.pause()
+#зачёт!
