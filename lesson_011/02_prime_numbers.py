@@ -123,10 +123,11 @@ def palindrome_numbers(number):
 #   Числа Мерсенна
 def mersenne_numbers(number):
     mersenne_numbers_list = [1, 3, 7, 15, 31, 63, 127, 255, 511, 1023, 2047, 4095, 8191]
-    if number in mersenne_numbers_list:
-        return True
-    else:
-        return False
+    # if number in mersenne_numbers_list:
+    #     return True
+    # else:
+    #     return False
+    return number in mersenne_numbers_list  # и тут можно вернуть условие
 
 
 # def prime_numbers_generator_with_func(n, func):
@@ -197,3 +198,4 @@ functions = [lucky_numbers, palindrome_numbers, mersenne_numbers]
 for func in functions:
     for number in prime_numbers_generator_with_func(n=10000, func=func):
         print(number)
+#зачёт!
